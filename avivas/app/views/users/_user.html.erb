@@ -1,36 +1,26 @@
 <div id="<%= dom_id user %>">
   <p>
-    <strong>Username:</strong>
+    <strong>Nombre de Usuario:</strong>
     <%= user.username %>
   </p>
 
   <p>
-    <strong>Email:</strong>
+    <strong>Correo Electronico:</strong>
     <%= user.email %>
   </p>
 
   <p>
-    <strong>Telephone:</strong>
+    <strong>Teléfono:</strong>
     <%= user.telephone %>
   </p>
 
-  <!-- No mostrar el password_digest -->
   <p>
-    <strong>Password:</strong>
-    <% if user.password_digest.present? %>
-      <em>Password is set</em> <!-- Mensaje indicando que se ha configurado una contraseña -->
-    <% else %>
-      <em>Password not set</em> <!-- Mensaje en caso de que no haya contraseña configurada -->
-    <% end %>
-  </p>
-
-  <p>
-    <strong>Entered at:</strong>
+    <strong>Fecha de Ingreso a la Cadena:</strong>
     <%= user.entered_at %>
   </p>
 
   <p>
-    <strong>Role:</strong>
+    <strong>Rol:</strong>
     <%= user.role %>
   </p>
 </div>

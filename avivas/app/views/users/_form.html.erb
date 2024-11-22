@@ -11,35 +11,35 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :username %>
+    <%= form.label :username, "Nombre de Usuario", style: "display: block" %>
     <%= form.text_field :username %>
   </div>
 
   <div class="field">
-    <%= form.label :email %>
+    <%= form.label :email, "Correo Electronico", style: "display: block" %>
     <%= form.email_field :email %>
   </div>
 
   <div class="field">
-    <%= form.label :telephone %>
+    <%= form.label :telephone, "Teléfono", style: "display: block" %>
     <%= form.telephone_field :telephone %>
   </div>
 
   <div class="field">
-    <%= form.label :password %>
+    <%= form.label :password, "Contraseña", style: "display: block" %>
     <%= form.password_field :password %>
   </div>
 
   <div class="field">
-    <%= form.label :password_confirmation, "Password Confirmation" %>
+    <%= form.label :password_confirmation, "Confirmar Contraseña", style: "display: block" %>
     <%= form.password_field :password_confirmation %>
   </div>
 
   <div class="field">
-    <%= form.label :role %>
+    <%= form.label :role, "Rol", style: "display: block" %>
     <%= form.text_field :role %>
   </div>
-
+  
   <div class="actions">
     <%= form.submit %>
   </div>
