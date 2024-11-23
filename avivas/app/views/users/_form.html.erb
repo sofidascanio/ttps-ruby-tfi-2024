@@ -40,6 +40,12 @@
     <%= form.select :role, User.roles.keys.map { |role| [role.humanize, role] }, prompt: "Elegi un Rol" %>
   </div>
 
+  <div class="field">
+    <%= form.label :entered_at, "Fecha de Ingreso", style: "display: block" %>
+    <%= form.date_field :entered_at %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
