@@ -16,4 +16,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root to: "home#index"
+
+  # agrego prefijo para que no choque con las rutas de users
+  devise_for :users, path: 'auth'
+
 end
