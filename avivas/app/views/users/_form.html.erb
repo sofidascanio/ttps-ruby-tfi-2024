@@ -26,20 +26,20 @@
   </div>
 
   <div class="field">
-    <%= form.label :password, "Contraseña", style: "display: block" %>
-    <%= form.password_field :password %>
-  </div>
+  <%= form.label :password, "Contraseña", style: "display: block" %>
+  <%= form.password_field :password %>
+</div>
+
+<div class="field">
+  <%= form.label :password_confirmation, "Confirmar Contraseña", style: "display: block" %>
+  <%= form.password_field :password_confirmation %>
+</div>
 
   <div class="field">
-    <%= form.label :password_confirmation, "Confirmar Contraseña", style: "display: block" %>
-    <%= form.password_field :password_confirmation %>
+    <%= form.label :role %>
+    <%= form.select :role, User.roles.keys.map { |role| [role.humanize, role] }, prompt: "Elegi un Rol" %>
   </div>
 
-  <div class="field">
-    <%= form.label :role, "Rol", style: "display: block" %>
-    <%= form.text_field :role %>
-  </div>
-  
   <div class="actions">
     <%= form.submit %>
   </div>

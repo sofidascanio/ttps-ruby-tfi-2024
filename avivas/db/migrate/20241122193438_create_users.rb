@@ -6,7 +6,6 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.string :telephone
       t.string :password_digest
       t.datetime :entered_at
-      t.string :role
 
       t.timestamps
     end
@@ -14,3 +13,5 @@ class CreateUsers < ActiveRecord::Migration[8.0]
     add_index :users, :email, unique: true
   end
 end
+
+

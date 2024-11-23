@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_22_193438) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_23_014501) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_193438) do
     t.string "telephone"
     t.string "password_digest"
     t.datetime "entered_at"
-    t.string "role"
+    t.integer "role", default: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

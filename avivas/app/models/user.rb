@@ -5,4 +5,7 @@ class User < ApplicationRecord
     validates :email, presence: true, uniqueness: true
     validates :telephone, presence: true
     validates :role, presence: true
+
+    enum :role, { admin: 0, manager: 1, employee: 2 }
+
 end
