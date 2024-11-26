@@ -19,9 +19,8 @@
     <%= product.stock %>
   </p>
 
-  <p>
-    <strong>Color:</strong>
-    <%= product.color %>
-  </p>
+  <div style="background-color: <%= @product.color %>;">
+  <p> Color: <%= @product.color %></p>
+</div>
 
 </div>
