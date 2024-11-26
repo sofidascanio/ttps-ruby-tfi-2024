@@ -19,8 +19,12 @@
     <%= product.stock %>
   </p>
 
-  <div style="background-color: <%= @product.color %>;">
-  <p> Color: <%= @product.color %></p>
+  <div style="background-color: <%= product.color %>;">
+  <p> Color: <%= product.color %></p>
 </div>
+
+<% product.images.each do |image| %>
+  <%= image_tag image,  style: "width: 300px; height: 300px;" %>
+<% end %>
 
 </div>

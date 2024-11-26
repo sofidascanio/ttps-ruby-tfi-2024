@@ -36,8 +36,21 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1 or /products/1.json
   def update
+    # Eliminar imágenes seleccionadas
+    if params[:product][:images_to_remove].present?
+      params[:product][:images_to_remove].each do |index|
+        @product.images[index.to_i].purge
+      end
+    end
+
+    # Agregar nuevas imágenes (sin borrar las existentes)
+    if params[:product][:images].present?
+      @product.images.attach(params[:product][:images])
+    end
+
+    # Actualizar otros atributos del producto
     respond_to do |format|
-      if @product.update(product_params)
+      if @product.update(product_params.except(:images))
         format.html { redirect_to @product, notice: "Product was successfully updated." }
         format.json { render :show, status: :ok, location: @product }
       else
@@ -45,6 +58,7 @@ class ProductsController < ApplicationController
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
+    
   end
 
   # DELETE /products/1 or /products/1.json
@@ -65,6 +79,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :name, :description, :price, :stock, :color, :deleted_at ])
+      params.expect(product: [ :name, :description, :price, :stock, :color, images: [] ])
     end
 end

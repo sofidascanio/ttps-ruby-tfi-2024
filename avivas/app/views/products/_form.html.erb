@@ -36,10 +36,27 @@
     <%= form.text_field :color %>
   </div>
 
-  <div>
-    <%= form.label :deleted_at, style: "display: block" %>
-    <%= form.datetime_field :deleted_at %>
+   <div class="field">
+    <%= form.label :images, "Images" %>
+    <%= form.file_field :images, multiple: true %>
   </div>
+
+   <% if @product.persisted? %>
+    <h3>Imágenes actuales</h3>
+    <% if @product.images.attached? %>
+      <% @product.images.each_with_index do |image, index| %>
+        <div>
+          <!-- Vista previa de la imagen -->
+          <%= image_tag image, style: "width: 300px; height: 300px;" %>
+          <!-- Checkbox para eliminar la imagen -->
+          <%= check_box_tag "product[images_to_remove][]", index, false %>
+          <%= label_tag "product_images_to_remove_#{index}", "Eliminar" %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No hay imágenes cargadas.</p>
+    <% end %>
+  <% end %>
 
    <div>
      <%= form.submit "Crear Producto" %>
