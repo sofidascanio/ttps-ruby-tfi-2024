@@ -23,5 +23,9 @@ module Avivas
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.i18n.available_locales = :es
+    # to enable pluralization and ordinals
+    config.rails_i18n.enabled_modules = [:pluralization, :ordinals]
   end
 end
