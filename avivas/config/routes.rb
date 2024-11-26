@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :users
   resources :sales
   resources :categories
   resources :products
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   root to: "home#index"
 
-  # agrego prefijo para que no choque con las rutas de users
-  devise_for :users, path: 'auth'
+  # # agrego prefijo para que no choque con las rutas de users
+  # devise_for :users, path: 'auth'
 
 end
