@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @sale %>
+
+<div>
+  <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale) %> |
+  <%= link_to t('back_to') + ' ' + t('sales'), sales_path %>
+
+  <%= button_to t('delete') + ' ' + t('sale'), @sale, method: :delete %>
+</div>

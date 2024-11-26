@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Ventas" %>
+
+<h1>Ventas</h1>
+
+<div id="sales">
+  <% @sales.each do |sale| %>
+    <%= render sale %>
+    <p>
+      <%= link_to link_to t('show') + ' ' + t('sales'), sale %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to t('new_sale') + ' ' + t('sale'), new_sale_path %>
