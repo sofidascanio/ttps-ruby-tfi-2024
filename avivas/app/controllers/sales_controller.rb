@@ -23,24 +23,33 @@ class SalesController < ApplicationController
 
   # POST /sales or /sales.json
   def create
-    @sale = Sale.new(sale_params)
-
-    @sale.product_sales.each do |product_sale|
-      if product_sale.product && !product_sale.marked_for_destruction?
-        product_sale.price = product_sale.product.price if product_sale.product
+    Sale.transaction do
+      @sale = Sale.new(sale_params)
+  
+      @sale.product_sales.each do |product_sale|
+        if product_sale.product && !product_sale.marked_for_destruction?
+          product_sale.price = product_sale.product.price if product_sale.product
+        end
       end
-    end
-
-    respond_to do |format|
-      if @sale.save
-        format.html { redirect_to @sale, notice: "Se creó la venta." }
-        format.json { render :show, status: :created, location: @sale }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @sale.errors, status: :unprocessable_entity }
+  
+      respond_to do |format|
+        if @sale.save
+          # actualizo el stock de los productos
+          @sale.product_sales.each do |product_sale|
+            product = product_sale.product
+            product.update!(stock: product.stock - product_sale.quantity)
+          end
+  
+          format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
+          format.json { render :show, status: :created, location: @sale }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @sale.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
+  
 
   # PATCH/PUT /sales/1 or /sales/1.json
   def update    
