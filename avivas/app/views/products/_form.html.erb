@@ -49,9 +49,7 @@
     <% if @product.images.attached? %>
       <% @product.images.each_with_index do |image, index| %>
         <div>
-          <!-- Vista previa de la imagen -->
           <%= image_tag image, style: "width: 300px; height: 300px;" %>
-          <!-- Checkbox para eliminar la imagen -->
           <%= check_box_tag "product[images_to_remove][]", index, false %>
           <%= label_tag "product_images_to_remove_#{index}", "Eliminar" %>
         </div>

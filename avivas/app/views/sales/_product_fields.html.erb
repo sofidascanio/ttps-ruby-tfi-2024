@@ -1,0 +1,18 @@
+<div class="product-item" data-index="<%= index %>">
+  <%= f.fields_for :product_sales, product_sale, child_index: index do |product_sale_form| %>
+    <%= product_sale_form.hidden_field :id %>
+
+    <%= product_sale_form.label :product_id, "Producto" %>
+    <%= product_sale_form.collection_select :product_id, Product.all, :id, :name, prompt: "Seleccione un producto" %>
+
+    <%= product_sale_form.label :quantity, "Cantidad" %>
+    <%= product_sale_form.number_field :quantity, min: 1 %>
+
+    <%= product_sale_form.hidden_field :price %>
+
+    <label>
+      <%= product_sale_form.check_box :_destroy %>
+      Eliminar este producto
+    </label>
+  <% end %>
+</div>

@@ -6,6 +6,9 @@ class Product < ApplicationRecord
 
     has_and_belongs_to_many :categories
 
+    has_many :product_sales
+    has_many :sales, through: :product_sales
+
     def color_object
         # convierte el código hexadecimal a un objeto RGB
         Color::RGB.from_hex(self.color)
