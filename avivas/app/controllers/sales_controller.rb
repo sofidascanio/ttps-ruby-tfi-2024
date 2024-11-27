@@ -61,6 +61,8 @@ class SalesController < ApplicationController
       end
     end
 
+    @sale.sale_price = @sale.product_sales.reject(&:marked_for_destruction?).sum { |ps| ps.quantity * ps.price }
+
     respond_to do |format|
       if @sale.update(sale_params)
         format.html { redirect_to @sale, notice: "Se actualizó la venta." }

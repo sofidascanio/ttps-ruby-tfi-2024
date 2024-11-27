@@ -7,6 +7,8 @@ class Sale < ApplicationRecord
 
     validate :check_stock_availability
 
+    before_save :calculate_sale_price
+
     private
 
     def check_stock_availability
@@ -16,5 +18,9 @@ class Sale < ApplicationRecord
               errors.add(:base, "El producto '#{product.name}' no tiene suficiente stock disponible. Stock actual: #{product.stock}, solicitado: #{product_sale.quantity}.")
             end
           end
+    end
+
+    def calculate_sale_price
+        self.sale_price = product_sales.sum { |ps| ps.quantity * ps.price }
     end
 end
