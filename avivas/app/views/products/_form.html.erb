@@ -36,6 +36,9 @@
   <%= form.color_field :color %>
 </div>
 
+<%= form.label :category_ids, "Selecciona las categorías" %>
+  <%= form.collection_select :category_ids, Category.all, :id, :name, { multiple: true } %>
+
    <div class="field">
     <%= form.label :images, "Images" %>
     <%= form.file_field :images, multiple: true %>

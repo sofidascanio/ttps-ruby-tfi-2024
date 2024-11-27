@@ -4,4 +4,11 @@
     <%= category.name %>
   </p>
 
+  <h3>Productos asociados:</h3>
+  <ul>
+    <% category.products.each do |product| %>
+      <li><%= product.name %> - <%= product.price %></li>
+    <% end %>
+  </ul>
+
 </div>

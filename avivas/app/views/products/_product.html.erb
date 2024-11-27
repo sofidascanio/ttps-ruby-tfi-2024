@@ -20,8 +20,15 @@
   </p>
 
   <div style="background-color: <%= product.color %>;">
-  <p> Color: <%= product.color %></p>
-</div>
+    <p> Color: <%= product.color %></p>
+  </div>
+
+  <h3>Categorías:</h3>
+  <ul>
+    <% product.categories.each do |category| %>
+      <li><%= category.name %></li>
+    <% end %>
+  </ul>
 
 <% product.images.each do |image| %>
   <%= image_tag image,  style: "width: 300px; height: 300px;" %>
