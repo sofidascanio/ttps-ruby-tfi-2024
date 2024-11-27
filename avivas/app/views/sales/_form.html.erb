@@ -37,48 +37,43 @@
 
 <%= javascript_tag do %>
   document.addEventListener("DOMContentLoaded", function() {
-    // Escuchar cambios en el campo de selección de producto
-    document.querySelectorAll('.product-select').forEach(function(select) {
+    const productsContainer = document.getElementById('products-container');
+    const addButton = document.getElementById('add-product-button');
+    let maxIndex = <%= sale.product_sales.maximum(:id) || 0 %>;
+
+    function setupProductSelect(select) {
       select.addEventListener('change', function(event) {
         var selectedProductId = event.target.value;
-        var hiddenPriceField = event.target.closest('.product-item').querySelector('input[type="hidden"]');
+        var hiddenPriceField = event.target.closest('.product-item').querySelector('input[name$="[price]"]');
 
         if (selectedProductId) {
-          // Obtener el producto con el precio correspondiente
           var selectedProduct = <%= raw Product.all.to_json %>.find(product => product.id == selectedProductId);
           hiddenPriceField.value = selectedProduct.price;
         }
       });
+    }
+
+    // Setup existing product selects
+    document.querySelectorAll('.product-select').forEach(setupProductSelect);
+
+    addButton.addEventListener('click', function() {
+      maxIndex++;
+      const template = document.querySelector('.product-item').cloneNode(true);
+      template.innerHTML = template.innerHTML
+        .replace(/\[(\d+)\]/g, `[${maxIndex}]`)
+        .replace(/_(\d+)_/g, `_${maxIndex}_`);
+
+      const newSelect = template.querySelector('select');
+      newSelect.value = '';
+      setupProductSelect(newSelect);
+
+      const quantityField = template.querySelector('input[type="number"]');
+      quantityField.value = '';
+
+      const idField = template.querySelector('input[name$="[id]"]');
+      if (idField) idField.remove();
+
+      productsContainer.appendChild(template);
     });
   });
-
-  document.addEventListener('DOMContentLoaded', function() {
-  const addButton = document.getElementById('add-product-button');
-  const productsContainer = document.getElementById('products-container');
-  
-  let index = productsContainer.children.length; // Obtener el índice inicial según los campos ya presentes
-
-  addButton.addEventListener('click', function() {
-    // Clona el último elemento como base para el nuevo
-    const lastProduct = productsContainer.lastElementChild;
-    const newProduct = lastProduct.cloneNode(true);
-
-    // Actualiza el índice del nuevo producto
-    newProduct.setAttribute('data-index', index);
-    newProduct.innerHTML = newProduct.innerHTML.replace(/\[\d+\]/g, `[${index}]`);
-    newProduct.innerHTML = newProduct.innerHTML.replace(/_\d+_/g, `_${index}_`);
-
-    // Limpia los campos del formulario
-    const selectField = newProduct.querySelector('select');
-    const quantityField = newProduct.querySelector('input[type="number"]');
-    selectField.value = '';
-    quantityField.value = '';
-
-    // Añade el nuevo producto al contenedor
-    productsContainer.appendChild(newProduct);
-
-    index++; // Incrementa el índice para el próximo producto
-  });
-});
-
 <% end %>

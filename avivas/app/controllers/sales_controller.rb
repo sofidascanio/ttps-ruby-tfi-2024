@@ -43,7 +43,7 @@ class SalesController < ApplicationController
   end
 
   # PATCH/PUT /sales/1 or /sales/1.json
-  def update
+  def update    
     @sale.product_sales.each do |product_sale|
       if product_sale.new_record? && product_sale.product
         product_sale.price = product_sale.product.price
@@ -51,7 +51,7 @@ class SalesController < ApplicationController
         product_sale.price = product_sale.product.price
       end
     end
-    
+
     respond_to do |format|
       if @sale.update(sale_params)
         format.html { redirect_to @sale, notice: "Se actualizó la venta." }
