@@ -13,8 +13,4 @@ class Product < ApplicationRecord
         # convierte el código hexadecimal a un objeto RGB
         Color::RGB.from_hex(self.color)
     end
-
-    def has_sufficient_stock?(quantity)
-        stock >= quantity
-    end
 end
