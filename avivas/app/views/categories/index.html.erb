@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, t('categories') %>
 
 <div class="title-container">
@@ -9,11 +7,10 @@
 
 <div id="categories">
   <% @categories.each do |category| %>
-    <%= render category %>
+    <h3><%= category.name %></h3>
     <p>
       <%= link_to t('show') + ' ' + t('category'), category, class: "link-button"  %>
     </p>
   <% end %>
 </div>
-
 

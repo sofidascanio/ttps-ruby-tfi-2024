@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, t('sales') %>
 
 <div class="title-container">
@@ -7,12 +5,15 @@
   <%= link_to t('new_sale') + ' ' + t('sale'), new_sale_path, class: "add-button" %>
 </div>
 
-<div id="sales">
+<div class="sales-container">
   <% @sales.each do |sale| %>
-    <%= render sale %>
-    <p>
+    <div>
+      <div>
+        <span><%= sale.created_at.strftime("Día: %d/%m/%Y, Hora: %H:%M") %></span>
+        <p> Cliente: <%= sale.client %></p>
+      </div>
       <%= link_to link_to t('show') + ' ' + t('sale'), sale, class: "link-button"  %>
-    </p>
+    </div>
   <% end %>
 </div>
 

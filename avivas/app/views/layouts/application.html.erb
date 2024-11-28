@@ -28,14 +28,19 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
     <header class="header-container">
         <nav>
             <div class="nav-left">
                 <a href="/products" class="nav-button"> Productos </a>
                 <a href="/sales" class="nav-button"> Ventas </a>
+            </div>
+            <div class="nav-center"> 
+                <% if notice.present? %>
+                    <p class="notice"><%= notice %></p>
+                <% end %>
+                <% if alert.present? %>
+                    <p class="alert"><%= alert %></p>
+                <% end %>
             </div>
             <div class="nav-right">
                 <% if user_signed_in? %>

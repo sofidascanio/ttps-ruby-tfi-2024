@@ -10,9 +10,16 @@ nav {
     align-items: center;
 }
 
-.nav-left, .nav-right {
+.nav-left, .nav-right, .nav-center {
     display: flex;
     gap: 15px;
+}
+
+.nav-center {
+    flex-grow: 1; /* Ocupa el espacio disponible entre nav-left y nav-right */
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Alinea los elementos verticalmente */
+    text-align: center;
 }
 
 .nav-button {
@@ -31,4 +38,50 @@ nav {
         background-color: #000807;
         color: #FBF9FF;
     }
+}
+
+.notice, .alert {
+    padding: 10px;
+    margin: 0;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    animation: fadeOut 0.5s ease-out 4s forwards;
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.notice {
+    background-color: #4CAF50;
+    color: #000807;
+    border: 1px solid #000807;
+}
+
+.alert {
+    background-color: #F44336; 
+    color: 000807;
+    border: 1px solid #000807;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+    
 }
