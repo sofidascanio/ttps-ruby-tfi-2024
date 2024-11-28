@@ -18,9 +18,11 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "navbar", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "sidebar", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "content", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= csrf_meta_tags %>
 
   </head>
 
@@ -28,21 +30,33 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-    <% if user_signed_in? %>
-      <%= button_to 'Cerrar sesión', destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to 'Iniciar sesión', new_user_session_path %>
-      <%= link_to 'Registrarse', new_user_registration_path %>
-    <% end %>
-
-    <h1> AVIVAS </h1>
-
-    <%= link_to 'Productos', products_path %>
-
-    <%= link_to 'Ventas', sales_path %>
-
-    <%= link_to 'Categorías', categories_path %>
-
-    <%= yield %>
+    <header class="header-container">
+        <nav>
+            <div class="nav-left">
+                <a href="/products" class="nav-button"> Productos </a>
+                <a href="/sales" class="nav-button"> Ventas </a>
+            </div>
+            <div class="nav-right">
+                <% if user_signed_in? %>
+                    <%= button_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class: "nav-button" %>
+                <% else %>
+                    <%= link_to "Iniciar Sesión", new_user_session_path, class: "nav-button" %>
+                <% end %>
+            </div>
+        </nav>
+    </header>
+    <div class="main-container">
+        <aside>
+            <div class="category-link"> <a href="/categories" class="category"> Categorias </a> </div>
+            <div>
+                <% Category.all.each do |category| %>
+                    <div><%= link_to category.name, category_path(category), class: "category-button" %></div>
+                <% end %>
+            </div>
+        </aside>
+        <main>
+            <%= yield %>
+        </main>
+    </div>
   </body>
 </html>

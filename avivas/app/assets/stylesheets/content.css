@@ -1,0 +1,13 @@
+.content-section {
+    background-color: #A2A3BB;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.content-section h1 {
+    margin-bottom: 15px;
+    color: #333;
+}
+

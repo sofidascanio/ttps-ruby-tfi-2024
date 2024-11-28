@@ -1,0 +1,33 @@
+header {
+    background-color: #9395D3;
+    color: white;
+    padding: 10px 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-button {
+    background-color: #000807;
+    color: #FBF9FF;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    &:hover {
+        background-color: #9395D3;
+    }
+}

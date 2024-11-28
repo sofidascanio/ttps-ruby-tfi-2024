@@ -5,10 +5,13 @@
   </p>
 
   <h3>Productos asociados:</h3>
-  <ul>
+  <div>
     <% category.products.each do |product| %>
-      <li><%= product.name %> - <%= product.price %></li>
+       <div> 
+          <%= render product %> 
+          <%= link_to t('show') + ' ' + t('product'), product %>
+       </div>
     <% end %>
-  </ul>
+  </div>
 
 </div>
