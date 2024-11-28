@@ -1,11 +1,8 @@
 <% content_for :title, t('new_sale') + ' ' + t('category') %>
 
-<h1> Nueva Categoría </h1>
+<div class="title-container">
+  <h1> Nueva Categoría </h1>
+   <%= link_to t('back_to') + ' ' + t('categories'), categories_path, class: "add-button"  %>
+</div>
 
 <%= render "form", category: @category %>
-
-<br>
-
-<div>
-   <%= link_to t('back_to') + ' ' + t('categories'), categories_path %>
-</div>

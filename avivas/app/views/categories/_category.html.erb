@@ -9,7 +9,7 @@
     <% category.products.each do |product| %>
        <div> 
           <%= render product %> 
-          <%= link_to t('show') + ' ' + t('product'), product %>
+          <%= link_to t('show') + ' ' + t('product'), product, class: "link-button" %>
        </div>
     <% end %>
   </div>

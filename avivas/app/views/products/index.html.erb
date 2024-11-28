@@ -2,15 +2,20 @@
 
 <% content_for :title, t('products') %>
 
-<h1> Productos </h1>
+<div class="title-container">
+  <h1> Productos </h1>
+  <%= link_to t('new') + ' ' + t('product'), new_product_path, class: "add-button" %>
+</div>
 
-<div id="products">
+<div class="products-container">
   <% @products.each do |product| %>
-    <%= render product %>
-    <p>
-      <%= link_to t('show') + ' ' + t('product'), product %>
-    </p>
+    <div class="product-card">
+      <div class="product-info">
+        <h3 class="product-name"><%= product.name %></h3>
+        <p class="product-price"><%= number_to_currency(product.price) %></p>
+      </div>
+      <%= link_to t('show') + ' ' + t('product'), product, class: "link-button"  %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to t('new') + ' ' + t('product'), new_product_path %>

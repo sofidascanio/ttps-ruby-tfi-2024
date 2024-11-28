@@ -17,8 +17,8 @@ aside div {
 }
 
 .category-button {
-    background-color: #000807;
-    color: #FBF9FF;
+    background-color: #9395D3;
+    color: #000807;
     border: none;
     text-align: center;
     text-decoration: none;
@@ -28,7 +28,8 @@ aside div {
     cursor: pointer;
     border-radius: 4px;
     &:hover {
-        background-color: #9395D3;
+        background-color: #000807;
+        color: #FBF9FF;
     }
 }
 
@@ -39,7 +40,7 @@ aside div {
     .category {
         margin-bottom: 10px;
         background-color: #9395D3;
-        color: #FBF9FF;
+        color: #000807;
         border: none;
         text-align: center;
         text-decoration: none;

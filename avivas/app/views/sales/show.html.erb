@@ -3,8 +3,8 @@
 <%= render @sale %>
 
 <div>
-  <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale) %> |
-  <%= link_to t('back_to') + ' ' + t('sales'), sales_path %>
+  <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale), class: "link-button"  %> |
+  <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "link-button"  %>
 
-  <%= button_to t('delete') + ' ' + t('sale'), @sale, method: :delete %>
+  <%= button_to t('delete') + ' ' + t('sale'), @sale, method: :delete, class: "link-button"  %>
 </div>

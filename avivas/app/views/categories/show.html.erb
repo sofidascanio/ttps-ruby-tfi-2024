@@ -3,8 +3,8 @@
 <%= render @category %>
 
 <div>
-  <%= link_to t('edit') + ' ' + t('category'), edit_category_path(@category) %> |
-  <%= link_to t('back_to') + ' ' + t('categories'), categories_path %>
+  <%= link_to t('edit') + ' ' + t('category'), edit_category_path(@category), class: "link-button"  %> |
+  <%= link_to t('back_to') + ' ' + t('categories'), categories_path, class: "link-button"  %>
 
-  <%= button_to t('delete') + ' ' + t('category'), @category, method: :delete %>
+  <%= button_to t('delete') + ' ' + t('category'), @category, method: :delete, class: "link-button"  %>
 </div>

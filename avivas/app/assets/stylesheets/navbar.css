@@ -16,8 +16,8 @@ nav {
 }
 
 .nav-button {
-    background-color: #000807;
-    color: #FBF9FF;
+    background-color: #9395D3;
+    color: #000807;
     border: none;
     padding: 10px 15px;
     text-align: center;
@@ -28,6 +28,7 @@ nav {
     cursor: pointer;
     border-radius: 4px;
     &:hover {
-        background-color: #9395D3;
+        background-color: #000807;
+        color: #FBF9FF;
     }
 }

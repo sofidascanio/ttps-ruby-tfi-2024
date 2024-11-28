@@ -2,15 +2,17 @@
 
 <% content_for :title, t('sales') %>
 
-<h1>Ventas</h1>
+<div class="title-container">
+  <h1> Ventas </h1>
+  <%= link_to t('new_sale') + ' ' + t('sale'), new_sale_path, class: "add-button" %>
+</div>
 
 <div id="sales">
   <% @sales.each do |sale| %>
     <%= render sale %>
     <p>
-      <%= link_to link_to t('show') + ' ' + t('sale'), sale %>
+      <%= link_to link_to t('show') + ' ' + t('sale'), sale, class: "link-button"  %>
     </p>
   <% end %>
 </div>
 
-<%= link_to t('new_sale') + ' ' + t('sale'), new_sale_path %>

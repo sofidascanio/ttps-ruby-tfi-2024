@@ -1,12 +1,9 @@
 <% content_for :title, t('edit') + ' ' + t('category') %>
 
-<h1> Editar Categoría </h1>
+<div class="title-container">
+  <h1> Editar Categoría  </h1>
+    <%= link_to t('show') + ' ' + t('category'),  @category, class: "add-button"   %> 
+   <%= link_to t('back_to') + ' ' + t('categories'), categories_path, class: "add-button"  %>
+</div>
 
 <%= render "form", category: @category %>
-
-<br>
-
-<div>
-  <%= link_to t('show') + ' ' + t('category'),  @category  %> |
-  <%= link_to t('back_to') + ' ' + t('categories'), categories_path %>
-</div>

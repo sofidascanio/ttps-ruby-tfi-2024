@@ -1,4 +1,4 @@
-<%= form_with(model: sale) do |form| %>
+<%= form_with(model: sale, class: "form") do |form| %>
   <% if sale.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(sale.errors.count, "error") %> impidieron guardar la venta:</h2>
@@ -11,23 +11,23 @@
     </div>
   <% end %>
 
-
-  <h3>Productos</h3>
-  <div id="products-container">
-    <% sale.product_sales.each_with_index do |product_sale, index| %>
-      <%= render 'product_fields', f: form, product_sale: product_sale, index: index %>
-    <% end %>
+  <div class="form-group">
+    <h3>Productos</h3>
+    <div id="products-container">
+      <% sale.product_sales.each_with_index do |product_sale, index| %>
+        <%= render 'product_fields', f: form, product_sale: product_sale, index: index %>
+      <% end %>
+    </div>
+     <button type="button" id="add-product-button">Agregar Producto</button>
   </div>
 
-  <button type="button" id="add-product-button">Agregar Producto</button>
-
-  <div>
+  <div class="form-group">
     <%= form.label :client, style: "display: block" %>
     <%= form.text_field :client %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-actions">
+    <%= form.submit class: "submit-button" %>
   </div>
 <% end %>
 

@@ -1,12 +1,9 @@
 <% content_for :title, t('edit') + ' ' + t('sale') %>
 
-<h1> Editar Venta </h1>
+<div class="title-container">
+  <h1> Editar Venta </h1>
+    <%= link_to t('show') + ' ' + t('sale'), @sale, class: "add-button"   %> 
+    <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "add-button"  %>
+</div>
 
 <%= render "form", sale: @sale %>
-
-<br>
-
-<div>
-  <%= link_to t('show') + ' ' + t('sale'), @sale %> |
-  <%= link_to t('back_to') + ' ' + t('sales'), sales_path %>
-</div>

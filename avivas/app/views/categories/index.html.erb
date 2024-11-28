@@ -2,16 +2,18 @@
 
 <% content_for :title, t('categories') %>
 
-<h1> Categorías </h1>
+<div class="title-container">
+  <h1> Categorías </h1>
+  <%= link_to t('new_sale') + ' ' + t('category'), new_category_path, class: "add-button" %>
+</div>
 
 <div id="categories">
   <% @categories.each do |category| %>
     <%= render category %>
     <p>
-      <%= link_to t('show') + ' ' + t('category'), category %>
+      <%= link_to t('show') + ' ' + t('category'), category, class: "link-button"  %>
     </p>
   <% end %>
 </div>
 
-<%= link_to t('new_sale') + ' ' + t('category'), new_category_path %>
 

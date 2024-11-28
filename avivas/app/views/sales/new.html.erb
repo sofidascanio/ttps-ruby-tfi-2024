@@ -1,11 +1,8 @@
 <% content_for :title, t('new_sale') + ' ' + t('sale') %>
 
-<h1> Nueva Venta </h1>
+<div class="title-container">
+  <h1> Nueva Venta  </h1>
+  <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "add-button"  %>
+</div>
 
 <%= render "form", sale: @sale %>
-
-<br>
-
-<div>
-  <%= link_to t('back_to') + ' ' + t('sales'), sales_path %>
-</div>

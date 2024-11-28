@@ -19,16 +19,19 @@
     <%= product.stock %>
   </p>
 
-  <div style="background-color: <%= product.color %>;">
-    <p> Color: <%= product.color %></p>
-  </div>
+  <div>
+  <p>
+    Color: 
+    <span style="display: inline-block; width: 1em; height: 1em; background-color: <%= product.color %>; margin-right: 0.5em; border: 1px solid #000;"></span>
+  </p>
+</div>
 
   <h3>Categorías:</h3>
   <ul>
     <% product.categories.each do |category| %>
       <li>
       <%= category.name %>
-      <%= link_to t('show') + ' ' + t('category'), category %>
+      <%= link_to t('show') + ' ' + t('category'), category, class: "link-button"  %>
       </li>
     <% end %>
   </ul>
