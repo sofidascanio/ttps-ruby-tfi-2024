@@ -20,6 +20,3 @@ main {
     overflow-y: auto;
     background-color: #FBF9FF;
 }
-
-@import "products/index";
-@import "products/show";
