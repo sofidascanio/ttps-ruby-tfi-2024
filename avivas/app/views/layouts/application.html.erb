@@ -23,6 +23,7 @@
     <%= stylesheet_link_tag "sidebar", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "content", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "form", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "login", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
   </head>
@@ -44,6 +45,7 @@
             </div>
             <div class="nav-right">
                 <% if user_signed_in? %>
+                     <%= link_to "Editar Perfil", edit_user_registration_path, class: "nav-button" %>
                     <%= button_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class: "nav-button" %>
                 <% else %>
                     <%= link_to "Iniciar Sesión", new_user_session_path, class: "nav-button" %>

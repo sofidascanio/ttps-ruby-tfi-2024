@@ -4,5 +4,6 @@
   <%= link_to t('edit') + ' ' + t('category'), edit_category_path(@category), class: "link-button"  %> |
   <%= link_to t('back_to') + ' ' + t('categories'), categories_path, class: "link-button"  %>
 
-  <%= button_to t('delete') + ' ' + t('category'), @category, method: :delete, class: "link-button"  %>
+  <%= button_to t('delete') + ' ' + t('category'), @category, method: :delete, class: "link-button"  %> |
+  <%= link_to "Volver", :back, class: "link-button" %>
 </div>

@@ -15,7 +15,7 @@
     <h3>Productos</h3>
     <div id="products-container">
       <% sale.product_sales.each_with_index do |product_sale, index| %>
-        <%= render 'product_fields', f: form, product_sale: product_sale, index: index %>
+        <%= render 'product_fields', f: form, product_sale: product_sale, index: index, products: @products %>
       <% end %>
     </div>
      <button type="button" id="add-product-button">Agregar Producto</button>

@@ -15,10 +15,12 @@ class SalesController < ApplicationController
   def new
     @sale = Sale.new
     @sale.product_sales.build 
+    @products = Product.all
   end
 
   # GET /sales/1/edit
   def edit
+    @products = Product.all
   end
 
   # POST /sales or /sales.json

@@ -3,7 +3,7 @@
     <%= product_sale_form.hidden_field :id %>
 
     <%= product_sale_form.label :product_id, "Producto" %>
-    <%= product_sale_form.collection_select :product_id, Product.all, :id, :name, prompt: "Seleccione un producto" %>
+    <%= product_sale_form.collection_select :product_id, products, :id, :name, prompt: "Seleccione un producto" %>
 
     <%= product_sale_form.label :quantity, "Cantidad" %>
     <%= product_sale_form.number_field :quantity, min: 0 %>
