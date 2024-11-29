@@ -6,6 +6,8 @@ es:
   sales: "Ventas"
   category: "Categoría"
   categories: "Categorias"
+  user: "Usuario"
+  users: "Usuarios"
   new: "Nuevo"
   new_sale: "Nueva"
   show: "Ver"

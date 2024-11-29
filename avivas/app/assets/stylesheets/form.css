@@ -12,26 +12,19 @@
   margin-bottom: 20px;
 }
 
-.form-group label {
+.form-label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
+  color: #000807;
   font-weight: bold;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group textarea,
-.form-group select {
+.form-input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
+  padding: 0.5rem;
   border-radius: 4px;
-  font-size: 16px;
-}
-
-.form-group textarea {
-  height: 100px;
-  resize: vertical;
+  font-size: 1rem;
+  border: 1px solid #ddd;
 }
 
 .form-actions {
@@ -62,11 +55,33 @@
   }
 }
 
-@media (max-width: 768px) {
-  .product-form {
-    padding: 15px;
+.form-select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #1b1e20;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #9395D3;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  &:focus {
+      border-color: #80bdff;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(1, 41, 83, 0.25);
   }
+  &:hover {
+      border-color: #b3b3b3;
+  }
+  option {
+      padding: 0.5rem;
+  }
+}
 
+
+@media (max-width: 768px) {
   .submit-button {
     padding: 10px 16px;
     font-size: 16px;

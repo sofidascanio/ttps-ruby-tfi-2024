@@ -1,0 +1,37 @@
+<%= form_with(model: @user, local: true, class: "form") do |form| %>
+  <div class="form-group">
+    <%= form.label :username, class:"form-label" %>
+    <%= form.text_field :username, class:"form-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email, class:"form-label" %>
+    <%= form.email_field :email, class:"form-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :telephone, class:"form-label" %>
+    <%= form.text_field :telephone, class:"form-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :role, class:"form-label" %>
+    <%= form.select :role, User.roles.keys.map { |role| [role.titleize, role] }, {}, { class: "form-select" } %>
+  </div>
+
+  <% if @user.new_record? %>
+    <div class="form-group">
+      <%= form.label :password, class:"form-label" %>
+      <%= form.password_field :password, class:"form-input" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :password_confirmation, class:"form-label" %>
+      <%= form.password_field :password_confirmation, class:"form-input" %>
+    </div>
+  <% end %>
+
+  <div class="form-actions">
+    <%= form.submit class: "submit-button"%>
+  </div>
+<% end %>

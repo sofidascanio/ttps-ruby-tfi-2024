@@ -23,7 +23,6 @@
     <%= stylesheet_link_tag "sidebar", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "content", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "form", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "login", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
   </head>
@@ -34,6 +33,7 @@
             <div class="nav-left">
                 <a href="/products" class="nav-button"> Productos </a>
                 <a href="/sales" class="nav-button"> Ventas </a>
+                <a href="/users" class="nav-button"> Usuarios </a>
             </div>
             <div class="nav-center"> 
                 <% if notice.present? %>
