@@ -25,6 +25,7 @@ es:
       product: "Producto" 
       category: "Categoría"
       sale: "Venta"
+      user: "Usuario"
     attributes:
       product:
         name: "Nombre"
@@ -35,9 +36,16 @@ es:
       category:
         name: "Nombre"
       sale:
-        sale_date: "Fecha y Hora"
         sale_price: "Precio Total"
         client: "Cliente"
+      user:
+        username: "Nombre de Usuario"
+        email: "Correo Electronico"
+        telephone: "Telefono"
+        role: "Role"
+        entered_at: "Fecha de Ingreso a la Cadena"
+        password: "Contraseña"
+        password_confirmation: "Confirmar Contraseña"
     
   date:
     abbr_day_names:

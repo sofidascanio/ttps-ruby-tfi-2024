@@ -27,6 +27,7 @@ class SalesController < ApplicationController
   def create
     Sale.transaction do
       @sale = Sale.new(sale_params)
+      @sale.user = current_user
   
       @sale.product_sales.each do |product_sale|
         if product_sale.product && !product_sale.marked_for_destruction?

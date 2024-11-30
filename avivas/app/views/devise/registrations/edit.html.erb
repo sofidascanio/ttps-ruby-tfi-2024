@@ -22,11 +22,6 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :role, "Rol", class: "form-label" %>
-      <%= f.select :role, User.roles.keys.map { |role| [role.humanize, role] }, {}, { class: "form-select" } %>
-    </div>
-
-    <div class="form-group">
       <%= f.label :entered_at, class:"form-label" %>
       <%= f.date_field :entered_at, class:"form-input" %>
     </div>

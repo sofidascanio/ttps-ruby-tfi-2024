@@ -17,6 +17,10 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "navbar", "data-turbo-track": "reload" %>
@@ -39,6 +43,10 @@
                 <% end %>
             </div>
             <div class="nav-center"> 
+               <div class="page-title">
+                    <img src="/icon.svg" alt="avivas" class="icon">
+                    <h1>Avivas</h1>
+                </div>
                 <% if notice.present? %>
                     <p class="notice"><%= notice %></p>
                 <% end %>
@@ -60,8 +68,10 @@
         <aside>
             <div class="category-link"> <a href="/categories" class="category"> Categorias </a> </div>
             <div>
-                <% Category.all.each do |category| %>
-                    <div><%= link_to category.name, category_path(category), class: "category-button" %></div>
+                <% @categories.each do |category| %>
+                    <div>
+                    <%= link_to category.name, category_path(category), class: "category-button" %>
+                    </div>
                 <% end %>
             </div>
         </aside>

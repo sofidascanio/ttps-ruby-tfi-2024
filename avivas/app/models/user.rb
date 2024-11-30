@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :sales
+
   validates :username, presence: true, uniqueness: true
   validates :telephone, presence: true, format: { with: /\A\d{7,15}\z/, message: "solo números, entre 7 y 15 dígitos" }
 

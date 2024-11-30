@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
     def new
         @user = User.new
+        @roles = User.roles.keys.map { |role| [role.humanize, role] }
     end
 
     def create
@@ -18,17 +19,20 @@ class UsersController < ApplicationController
         if @user.save
             redirect_to users_path, notice: "Usuario creado exitosamente."
         else
+            @roles = User.roles.keys.map { |role| [role.humanize, role] }
             render :new, status: :unprocessable_entity
         end
     end
 
     def edit
+        @roles = User.roles.keys.map { |role| [role.humanize, role] }
     end
 
     def update
         if @user.update(user_params)
             redirect_to @user, notice: "Usuario actualizado exitosamente."
         else
+            @roles = User.roles.keys.map { |role| [role.humanize, role] }
             render :edit, status: :unprocessable_entity
         end
     end

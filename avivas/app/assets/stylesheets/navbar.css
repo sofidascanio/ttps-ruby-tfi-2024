@@ -4,6 +4,21 @@ header {
     padding: 10px 20px;
 }
 
+.page-title {
+    display: flex;
+    align-items: center; 
+    .icon {
+        width: 40px; 
+        height: 40px; 
+        margin-right: 15px; 
+    }
+    h1 {
+        font-size: 2em;
+        font-weight: bold;
+        color: #000807;
+    }
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -16,9 +31,9 @@ nav {
 }
 
 .nav-center {
-    flex-grow: 1; /* Ocupa el espacio disponible entre nav-left y nav-right */
-    justify-content: center; /* Centra los elementos horizontalmente */
-    align-items: center; /* Alinea los elementos verticalmente */
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center; 
     text-align: center;
 }
 

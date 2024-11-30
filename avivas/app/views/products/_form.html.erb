@@ -12,56 +12,77 @@
   <% end %>
 
   <div class="form-group">
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.label :name, class:"form-label"%>
+    <%= form.text_field :name, class:"form-input" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+    <%= form.label :description, class:"form-label" %>
+    <%= form.text_field :description, class:"form-input" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
+    <%= form.label :price, class:"form-label" %>
+    <%= form.text_field :price, class:"form-input" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :stock, style: "display: block" %>
-    <%= form.number_field :stock %>
+    <%= form.label :stock, class:"form-label" %>
+    <%= form.number_field :stock, class:"form-input" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :color, "Seleccionar color:", style: "display: block" %>
+    <%= form.label :color, class:"form-label" %>
     <%= form.color_field :color %>
   </div>
 
   <div class="form-group"> 
-    <%= form.label :category_ids, "Selecciona las categorías", style: "display: block" %>
-    <%= form.collection_select :category_ids, @categories, :id, :name, { multiple: true } %>
+    <%= form.label :category_ids, "Categorías", class:"form-label" %>
+    <%= form.collection_select :category_ids, @categories, :id, :name, { multiple: true }, { class: "form-category-select" } %>
   </div>
 
-   <div class="form-group">
-    <%= form.label :images, "Images" %>
-    <%= form.file_field :images, multiple: true %>
+  <div class="form-group">
+    <%= form.label :images, "Imágenes", class: "form-label" %>
+    <div class="file-upload-container">
+      <%= form.file_field :images, multiple: true, class: "form-file-input", id: "productImages" %>
+      <label for="productImages" class="file-input-label">Seleccionar archivos</label>
+      <span id="file-upload-status" class="file-upload-status">No se han seleccionado archivos</span>
+    </div>
   </div>
 
-   <% if @product.persisted? %>
-    <h3>Imágenes actuales</h3>
-    <% if @product.images.attached? %>
-      <% @product.images.each_with_index do |image, index| %>
-        <div>
-          <%= image_tag image, style: "width: 300px; height: 300px;" %>
-          <%= check_box_tag "product[images_to_remove][]", index, false %>
-          <%= label_tag "product_images_to_remove_#{index}", "Eliminar" %>
-        </div>
-      <% end %>
-    <% else %>
-      <p>No hay imágenes cargadas.</p>
-    <% end %>
+  <% if @product.persisted? && @product.images.attached? %>
+    <div class="current-images-section">
+      <span class="form-label">Imágenes actuales</span>
+      <div class="image-grid">
+        <% @product.images.each_with_index do |image, index| %>
+          <div class="image-item">
+            <%= image_tag image, class: "product-image" %>
+            <div class="image-actions">
+              <%= check_box_tag "product[images_to_remove][]", index, false, id: "product_image_#{index}", class: "remove-image-checkbox" %>
+              <%= label_tag "product_image_#{index}", "Eliminar", class: "remove-image-label" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% elsif @product.persisted? %>
+    <p class="no-images-message">No hay imágenes cargadas.</p>
   <% end %>
 
    <div class="form-actions">
      <%= form.submit class: "submit-button"  %>
   </div>
+<% end %>
+
+<%= javascript_tag do %>
+  document.getElementById('productImages').addEventListener('change', function(e) {
+    var status = document.getElementById('file-upload-status');
+    if (e.target.files.length > 0) {
+      status.textContent = e.target.files.length + ' archivo(s) seleccionado(s)';
+      status.classList.add('files-selected');
+    } else {
+      status.textContent = 'No se han seleccionado archivos';
+      status.classList.remove('files-selected');
+    }
+  });
 <% end %>

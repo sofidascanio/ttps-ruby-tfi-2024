@@ -5,6 +5,8 @@ class Sale < ApplicationRecord
     # asociación anidada para permitir que los productos y sus cantidades sean asignados en el formulario
     accepts_nested_attributes_for :product_sales, allow_destroy: true
 
+    belongs_to :user
+
     validate :check_stock_availability
 
     before_save :calculate_sale_price
