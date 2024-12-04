@@ -1,9 +1,12 @@
-<%= render @sale %>
+<div class="content-container">
+  <div class="sales-container">
+    <%= render @sale %>
 
-<div>
-  <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale), class: "link-button"  %> |
-  <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "link-button"  %>
+    <div class="links-container">
+    <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "link back-link"  %>
+      <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale), class: "link edit-link"  %> 
 
-  <%= button_to t('delete') + ' ' + t('sale'), @sale, method: :delete, class: "link-button"  %> |
-  <%= link_to "Volver", :back, class: "link-button" %>
+      <%= button_to t('delete') + ' ' + t('sale'), @sale, method: :delete, class: "link delete-link"  %> 
+    </div>
+  </div>
 </div>

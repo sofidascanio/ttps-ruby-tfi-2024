@@ -1,8 +1,14 @@
-<%= render @user %>
+<div class="content-container">
+  <div class="user-container">
+      <%= render @user %>
 
-<div>
-  <%= link_to t('edit') + ' ' + t('user'), edit_user_path(@user), class: "link-button"  %> |
-  <%= link_to t('back_to') + ' ' + t('users'), users_path, class: "link-button"  %>
+    <div class="links-container">
+      <%= link_to t('back_to') + ' ' + t('users'), users_path, class: "link back-link"  %>
 
-  <%= button_to t('delete') + ' ' + t('user'), @user, method: :delete, class: "link-button"  %> 
+      <%= link_to t('edit') + ' ' + t('user'), edit_user_path(@user), class: "link edit-link"  %>
+
+      <%= button_to t('delete') + ' ' + t('user'), @user, method: :delete, class: "link delete-link"  %> 
+    </div>
+
+  </div>
 </div>

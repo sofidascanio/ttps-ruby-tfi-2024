@@ -1,10 +1,15 @@
-<%= render @product %>
+<div class="content-container">
+  <div class="product-container">
 
-<div>
-  <% if user_signed_in? %>
-    <%= link_to t('edit') + ' ' + t('product'), edit_product_path(@product), class: "link-button"  %>
-    <%= button_to t('delete') + ' ' + t('product'), @product, method: :delete, class: "link-button"  %>
-  <% end %>
-  <%= link_to t('back_to') + ' ' + t('products'), products_path, class: "link-button"  %>
-  <%= link_to "Volver", :back, class: "link-button" %>
+  <%= render @product %>
+
+  <div class="links-container">
+    <%= link_to t('back_to') + ' ' + t('products'), products_path, class: "link back-link"  %>
+    <% if user_signed_in? %>
+      <%= link_to t('edit') + ' ' + t('product'), edit_product_path(@product), class: "link edit-link"  %>
+      <%= button_to t('delete') + ' ' + t('product'), @product, method: :delete, class: "link delete-link"  %>
+    <% end %>
+  </div>
+
+  </div>
 </div>

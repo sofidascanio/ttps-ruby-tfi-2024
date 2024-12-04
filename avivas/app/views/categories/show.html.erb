@@ -1,10 +1,14 @@
-<%= render @category %>
+<div class="index-container">
 
-<div>
-  <% if user_signed_in? %>
-    <%= link_to t('edit') + ' ' + t('category'), edit_category_path(@category), class: "link-button"  %>
-    <%= button_to t('delete') + ' ' + t('category'), @category, method: :delete, class: "link-button"  %> 
-  <% end %>
-  <%= link_to t('back_to') + ' ' + t('categories'), categories_path, class: "link-button"  %>
-  <%= link_to "Volver", :back, class: "link-button" %>
+  <div class="links-container">
+    <%= link_to t('back_to') + ' ' + t('categories'), categories_path, class: "link back-link"  %>
+    <% if user_signed_in? %>
+      <%= link_to t('edit') + ' ' + t('category'), edit_category_path(@category), class: "link edit-link"  %>
+      <%= button_to t('delete') + ' ' + t('category'), @category, method: :delete, class: "link delete-link"  %> 
+    <% end %>
+  </div>
+
+
+  <%= render @category %>
+
 </div>

@@ -1,7 +1,7 @@
 header {
     background-color: #9395D3;
     color: white;
-    padding: 10px 20px;
+    padding: 20px 20px;
 }
 
 .page-title {
@@ -16,6 +16,10 @@ header {
         font-size: 2em;
         font-weight: bold;
         color: #000807;
+    }
+    a.link {
+        text-decoration: none;
+        color: inherit;
     }
 }
 

@@ -1,15 +1,24 @@
 <div id="<%= dom_id category %>">
-  <div class="title-container">
+
+  <div class="product-title-container">
     <h1> <%= category.name %> </h1>
   </div>
 
-  <h3>Productos asociados:</h3>
-  <div>
+  <div class="products-container">
     <% category.products.each do |product| %>
-       <div> 
-          <%= render product %> 
-          <%= link_to t('show') + ' ' + t('product'), product, class: "link-button" %>
-       </div>
+      <%= link_to product_path(product), class: "product-card" do %>
+        <div class="product-image">
+          <% if product.images.any? %>
+            <%= image_tag product.images.first, alt: product.name %>
+          <% else %>
+            <img src="https://via.placeholder.com/300" alt="<%= product.name %>">
+          <% end %>
+        </div>
+        <div class="product-info">
+          <h3><%= product.name %></h3>
+          <p class="price"><%= number_to_currency(product.price, unit: "$", separator: ",", delimiter: ".") %></p>
+        </div>
+      <% end %>
     <% end %>
   </div>
 

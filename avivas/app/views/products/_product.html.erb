@@ -1,43 +1,69 @@
 <div id="<%= dom_id product %>">
-  <p>
-    <strong>Nombre:</strong>
-    <%= product.name %>
-  </p>
-
-  <p>
-    <strong>Descripción:</strong>
-    <%= product.description %>
-  </p>
-
-  <p>
-    <strong>Precio Unitario:</strong>
-    <%= product.price %>
-  </p>
-
-  <p>
-    <strong>Stock Disponible:</strong>
-    <%= product.stock %>
-  </p>
-
-  <div>
-  <p>
-    Color: 
-    <span style="display: inline-block; width: 1em; height: 1em; background-color: <%= product.color %>; margin-right: 0.5em; border: 1px solid #000;"></span>
-  </p>
+  <div class="product-detail">
+    <div class="image-carousel">
+      <div class="carousel-container">
+        <% if product.images.any? %>
+          <%= image_tag product.images.first, class: "carousel-image", id: "carousel-image" %>
+        <% else %>
+          <%= image_tag "https://via.placeholder.com/500x500?text=No+Image", class: "carousel-image", id: "carousel-image" %>
+        <% end %>
+      </div>
+      <button class="carousel-button prev">&lt;</button>
+      <button class="carousel-button next">&gt;</button>
+    </div>
+    <div class="product-info">
+      <h1 id="product-name"><%= product.name %></h1>
+      <p id="product-description"><%= product.description %></p>
+      <p class="price">Price: <span id="product-price"><%= number_to_currency(product.price, unit: "$", separator: ",", delimiter: ".") %></span></p>
+      <p>Stock: <span id="product-stock"><%= product.stock %></span></p>
+      <div class="color-display">
+        <span>Color:</span>
+        <div id="color-square" style="background-color: <%= product.color %>;"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
-  <h3>Categorías:</h3>
-  <ul>
-    <% product.categories.each do |category| %>
-      <li>
-      <%= category.name %>
-      <%= link_to t('show') + ' ' + t('category'), category, class: "link-button"  %>
-      </li>
-    <% end %>
-  </ul>
+<%= javascript_tag do %>
+  document.addEventListener('DOMContentLoaded', function() {
+    const images = <%= raw product.images.map { |image| url_for(image) }.to_json %>;
+    const carouselImage = document.getElementById('carousel-image');
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const nextButton = document.querySelector('.carousel-button.next');
+    let currentImageIndex = 0;
 
-<% product.images.each do |image| %>
-  <%= image_tag image,  style: "width: 300px; height: 300px;" %>
+    function updateImage() {
+      if (images.length > 0) {
+        carouselImage.src = images[currentImageIndex];
+      }
+    }
+
+    function updateButtonVisibility() {
+      if (images.length <= 1) {
+        prevButton.style.display = 'none';
+        nextButton.style.display = 'none';
+      } else {
+        prevButton.style.display = 'block';
+        nextButton.style.display = 'block';
+      }
+    }
+
+    prevButton.addEventListener('click', () => {
+      if (images.length > 1) {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        updateImage();
+      }
+    });
+
+    nextButton.addEventListener('click', () => {
+      if (images.length > 1) {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        updateImage();
+      }
+    });
+
+    updateButtonVisibility();
+  });
 <% end %>
 
-</div>
+

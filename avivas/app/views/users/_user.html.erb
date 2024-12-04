@@ -1,7 +1,10 @@
-<h1>Información del Usuario</h1>
-
-<p><strong>Nombre de Usuario:</strong> <%= user.username %></p>
-<p><strong>Email:</strong> <%= user.email %></p>
-<p><strong>Teléfono:</strong> <%= user.telephone %></p>
-<p><strong>Rol:</strong> <%= user.role.titleize %></p>
-<p><strong>Fecha de Ingreso:</strong> <%= user.entered_at %></p>
+<div class="user-show-header">
+    <h1>Información del Usuario</h1>
+</div>
+<div class="user-show-content">
+    <p><strong>Nombre de Usuario:</strong> <%= user.username %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <p><strong>Teléfono:</strong> <%= user.telephone %></p>
+    <p><strong>Rol:</strong> <%= user.role.titleize %></p>
+    <p><strong>Fecha de Ingreso:</strong> <%= user.entered_at %></p>
+</div>

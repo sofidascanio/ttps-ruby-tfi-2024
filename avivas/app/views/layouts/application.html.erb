@@ -28,6 +28,11 @@
     <%= stylesheet_link_tag "content", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "form", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "users/index", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "users/show", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "products/index", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "products/show", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "sales/index", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "sales/show", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
   </head>
@@ -45,7 +50,7 @@
             <div class="nav-center"> 
                <div class="page-title">
                     <img src="/icon.svg" alt="avivas" class="icon">
-                    <h1>Avivas</h1>
+                    <h1> <%= link_to "Avivas", products_path, class: "link" %></h1>
                 </div>
                 <% if notice.present? %>
                     <p class="notice"><%= notice %></p>

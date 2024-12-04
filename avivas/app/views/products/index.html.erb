@@ -1,23 +1,30 @@
 <% content_for :title, t('products') %>
 
-<div class="title-container">
-  <h1> Productos </h1>
-  <% if user_signed_in? %>
-    <%= link_to t('new') + ' ' + t('product'), new_product_path, class: "add-button" %>
-  <% end %>
-</div>
+<div class="index-container">
+  <div class="product-title-container">
+    <h1> Productos </h1>
+    <% if user_signed_in? %>
+      <%= link_to t('new') + ' ' + t('product'), new_product_path, class: "add-button" %>
+    <% end %>
+  </div>
 
-<div class="products-container">
-  <% @products.each do |product| %>
-    <div>
-      <div>
-        <h3><%= product.name %></h3>
-        <p><%= number_to_currency(product.price) %></p>
-        <p><%= product.stock %> </p>
-      </div>
-    </div>
-    <%= link_to t('show') + ' ' + t('product'), product, class: "link-button"  %>
+  <div class="products-container">
+    <% @products.each do |product| %>
+      <%= link_to product_path(product), class: "product-card" do %>
+        <div class="product-image">
+          <% if product.images.any? %>
+            <%= image_tag product.images.first, alt: product.name %>
+          <% else %>
+            <img src="https://via.placeholder.com/300" alt="<%= product.name %>">
+          <% end %>
+        </div>
+        <div class="product-info">
+          <h3><%= product.name %></h3>
+          <p class="price"><%= number_to_currency(product.price, unit: "$", separator: ",", delimiter: ".") %></p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
-  <% end %>
 </div>
 
