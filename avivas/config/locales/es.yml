@@ -14,6 +14,10 @@ es:
   edit: "Editar"
   back_to: "Volver a"
   delete: "Eliminar"
+  roles:
+    admin: "Administrador"
+    manager: "Gerente"
+    employee: "Empleado"
   activerecord:
     errors:
       messages:
@@ -42,7 +46,7 @@ es:
         username: "Nombre de Usuario"
         email: "Correo Electronico"
         telephone: "Telefono"
-        role: "Role"
+        role: "Rol"
         entered_at: "Fecha de Ingreso a la Cadena"
         password: "Contraseña"
         password_confirmation: "Confirmar Contraseña"

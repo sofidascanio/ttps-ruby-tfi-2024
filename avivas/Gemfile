@@ -69,3 +69,5 @@ gem 'color'
 gem 'devise'
 
 gem 'faker'
+
+gem 'ransack'

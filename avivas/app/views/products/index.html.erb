@@ -8,6 +8,20 @@
     <% end %>
   </div>
 
+  <%= search_form_for @q, url: products_path, html: { class: "search-form" } do |f| %>
+    <div class="search-form-group">
+      <%= f.label :name_cont, "Nombre", class: "search-form-label" %>
+      <%= f.search_field :name_cont, class: "search-form-input", placeholder: "Ingresa el nombre del producto..." %>
+    </div>
+    <div class="search-form-group">
+      <%= f.label :description_cont, "Descripción", class: "search-form-label" %>
+      <%= f.search_field :description_cont, class: "search-form-input", placeholder: "Ingresa la descripción del producto..." %>
+    </div>
+    <div class="search-form-submit-group">
+      <%= f.submit "Buscar Productos", class: "search-form-submit" %>
+    </div>
+  <% end %>
+
   <div class="products-container">
     <% @products.each do |product| %>
       <%= link_to product_path(product), class: "product-card" do %>

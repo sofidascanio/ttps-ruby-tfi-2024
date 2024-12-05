@@ -5,6 +5,6 @@
     <p><strong>Nombre de Usuario:</strong> <%= user.username %></p>
     <p><strong>Email:</strong> <%= user.email %></p>
     <p><strong>Teléfono:</strong> <%= user.telephone %></p>
-    <p><strong>Rol:</strong> <%= user.role.titleize %></p>
+    <p><strong>Rol:</strong> <%= t("roles.#{user.role}") %></p>
     <p><strong>Fecha de Ingreso:</strong> <%= user.entered_at %></p>
 </div>

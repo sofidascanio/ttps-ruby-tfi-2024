@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     def new
         @user = User.new
-        @roles = User.roles.keys.map { |role| [role.humanize, role] }
+        @roles = User.roles.keys.map { |role| [t("roles.#{role}"), role] }
     end
 
     def create
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     end
 
     def edit
-        @roles = User.roles.keys.map { |role| [role.humanize, role] }
+        @roles = User.roles.keys.map { |role| [t("roles.#{role}"), role] }
     end
 
     def update

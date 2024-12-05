@@ -31,20 +31,26 @@ class SalesController < ApplicationController
   
       @sale.product_sales.each do |product_sale|
         if product_sale.product && !product_sale.marked_for_destruction?
-          product_sale.price = product_sale.product.price if product_sale.product
+          product_sale.price = product_sale.product.price
         end
       end
   
       respond_to do |format|
-        if @sale.save
-          # actualizo el stock de los productos
-          @sale.product_sales.each do |product_sale|
-            product = product_sale.product
-            product.update!(stock: product.stock - product_sale.quantity)
-          end
+        # Chequear stock antes de intentar guardar
+        if @sale.valid? && check_stock_availability(@sale)
+          if @sale.save
+            # Actualizar el stock de los productos
+            @sale.product_sales.each do |product_sale|
+              product = product_sale.product
+              product.update!(stock: product.stock - product_sale.quantity)
+            end
   
-          format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
-          format.json { render :show, status: :created, location: @sale }
+            format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
+            format.json { render :show, status: :created, location: @sale }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @sale.errors, status: :unprocessable_entity }
+          end
         else
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @sale.errors, status: :unprocessable_entity }
@@ -56,15 +62,7 @@ class SalesController < ApplicationController
 
   # PATCH/PUT /sales/1 or /sales/1.json
   def update    
-    @sale.product_sales.each do |product_sale|
-      if product_sale.new_record? && product_sale.product
-        product_sale.price = product_sale.product.price
-      elsif !product_sale.marked_for_destruction? && product_sale.product_id_changed?
-        product_sale.price = product_sale.product.price
-      end
-    end
-
-    @sale.sale_price = @sale.product_sales.reject(&:marked_for_destruction?).sum { |ps| ps.quantity * ps.price }
+    # no se usa el update, consultar
 
     respond_to do |format|
       if @sale.update(sale_params)
@@ -96,10 +94,17 @@ class SalesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def sale_params
-    params.require(:sale).permit( 
-      :sale_price,
-      :client,
-      product_sales_attributes: [:id, :product_id, :quantity, :price, :_destroy]
-    )
+    params.require(:sale).permit(:sale_price, :client, product_sales_attributes: [:id, :product_id, :quantity, :price, :_destroy])
+  end
+
+  def check_stock_availability(sale)
+    sale.product_sales.each do |product_sale|
+      product = product_sale.product
+      if product && product.stock < product_sale.quantity
+        sale.errors.add(:base, "El producto '#{product.name}' no tiene suficiente stock disponible. Stock actual: #{product.stock}, solicitado: #{product_sale.quantity}.")
+        return false
+      end
+    end
+    true
   end
 end
