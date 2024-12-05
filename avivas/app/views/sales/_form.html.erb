@@ -45,7 +45,7 @@
 <% end %>
 
 <%= javascript_tag do %>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('turbo:load', function() {
   const productsContainer = document.getElementById('products-container');
   const addButton = document.getElementById('add-product-button');
   let productIndex = document.querySelectorAll('.product-item').length;

@@ -26,7 +26,7 @@
 </div>
 
 <%= javascript_tag do %>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('turbo:load', function() {
     const images = <%= raw product.images.map { |image| url_for(image) }.to_json %>;
     const carouselImage = document.getElementById('carousel-image');
     const prevButton = document.querySelector('.carousel-button.prev');
