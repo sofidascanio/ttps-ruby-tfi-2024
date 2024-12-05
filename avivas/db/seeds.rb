@@ -65,10 +65,10 @@ end
             price: product.price,
             quantity: rand(1..15) 
         )
-        total_price = total_price + product.price
+        total price += product.price
     end
 
-    sale.sale_price = total_price
+    sale.update!(sale_price: total_price)
 end
 
 15.times do

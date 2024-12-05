@@ -18,6 +18,13 @@ es:
     admin: "Administrador"
     manager: "Gerente"
     employee: "Empleado"
+  views:
+    pagination:
+        first: "Primera"
+        prev: "Anterior"
+        next: "Siguiente"
+        last: "Última"
+        truncate: "..."
   activerecord:
     errors:
       messages:

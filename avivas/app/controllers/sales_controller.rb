@@ -4,7 +4,7 @@ class SalesController < ApplicationController
 
   # GET /sales or /sales.json
   def index
-    @sales = Sale.all
+    @sales = Sale.order(created_at: :desc).page(params[:page])
   end
 
   # GET /sales/1 or /sales/1.json
@@ -34,6 +34,8 @@ class SalesController < ApplicationController
           product_sale.price = product_sale.product.price
         end
       end
+
+      @sale.sale_price = @sale.product_sales.sum { |ps| ps.quantity * ps.price }
   
       respond_to do |format|
         # Chequear stock antes de intentar guardar

@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def load_categories
-    @categories = Category.all
+    @categories = Category.order(created_at: :desc).page(params[:page])
   end
 end
