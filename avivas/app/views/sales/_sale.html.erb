@@ -1,44 +1,37 @@
 <div id="<%= dom_id sale %>">
-  <p>
-    <strong> Fecha y Hora:</strong>
-    <%= sale.created_at %>
-  </p>
-  <p>
-    <strong> Precio Total:</strong>
-    <%= sale.sale_price %>
-  </p>
+  <div class="user-show-header">
+        <h1>Información de la Venta </h1>
+  </div>
 
-  <p>
-    <strong> Empleado que realizo la venta:</strong>
-    <%= sale.user.username %>
-  </p>
+  <div class="user-show-content">
+      <p><strong>Fecha y Hora:</strong> <%= sale.created_at.strftime("%d/%m/%Y, %H:%M") %></p>
+      <p><strong>Precio Total:</strong> <%= sale.sale_price %></p>
+      <p><strong>Empleado:</strong> <%=  sale.user.username %></p>
+      <p><strong>Cliente:</strong> <%= sale.client %></p>
+  </div>
 
-  <p>
-    <strong> Cliente:</strong>
-    <%= sale.client %>
-  </p>
-
-  <h3>Productos en esta venta:</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Producto</th>
-      <th>Cantidad</th>
-      <th>Precio</th>
-      <th>Ver Producto </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% sale.product_sales.each do |product_sale| %>
+<div class="table-container">
+  <table>
+    <thead>
       <tr>
-        <td><%= product_sale.product.name %></td>
-        <td><%= product_sale.quantity %></td>
-        <td><%= product_sale.price %></td>
-        <td><%= link_to link_to t('show') + ' ' + t('product'), product_sale.product, class: "link-button"  %>  </td>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Ver Producto </th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% sale.product_sales.each do |product_sale| %>
+        <tr>
+          <td><%= product_sale.product.name %></td>
+          <td><%= product_sale.quantity %></td>
+          <td><%= product_sale.price %></td>
+          <td><%= link_to link_to t('show') + ' ' + t('product'), product_sale.product, class: "link-button"  %>  </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 
 </div>
