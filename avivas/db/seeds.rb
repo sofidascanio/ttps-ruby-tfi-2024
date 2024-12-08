@@ -19,6 +19,24 @@ User.create!(
     entered_at: Date.strptime('20/10/2021', '%d/%m/%Y')
 )
 
+User.create!(
+    username: "juanperez",
+    email: "juan@gmail.com",
+    password: "123456",
+    telephone: "1234567",
+    role: 1,
+    entered_at: Date.strptime('15/07/2020', '%d/%m/%Y')
+)
+
+User.create!(
+    username: "pedrolopez",
+    email: "pedro@gmail.com",
+    password: "123456",
+    telephone: "1234567",
+    role: 2,
+    entered_at: Date.strptime('04/03/2023', '%d/%m/%Y')
+)
+
 15.times do
     begin
         User.create!(
@@ -65,7 +83,7 @@ end
             price: product.price,
             quantity: rand(1..15) 
         )
-        total price += product.price
+        total_price += product.price
     end
 
     sale.update!(sale_price: total_price)

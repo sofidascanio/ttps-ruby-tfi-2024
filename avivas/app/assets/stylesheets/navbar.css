@@ -1,6 +1,6 @@
 header {
-    background-color: #9395D3;
-    color: white;
+    background-color: #732C2C;
+    color: #EFF7CF;
     padding: 20px 20px;
 }
 
@@ -15,7 +15,7 @@ header {
     h1 {
         font-size: 2em;
         font-weight: bold;
-        color: #000807;
+        color: #EFF7CF;
     }
     a.link {
         text-decoration: none;
@@ -42,8 +42,8 @@ nav {
 }
 
 .nav-button {
-    background-color: #9395D3;
-    color: #000807;
+    background-color: #732C2C;
+    color: #EFF7CF;
     border: none;
     padding: 10px 15px;
     text-align: center;

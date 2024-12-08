@@ -1,6 +1,6 @@
 aside {
     width: 200px;
-    background-color: #9395D3;
+    background-color: #732C2C;
     color: #EFF7CF;
     padding: 20px;
     height: 100%;
@@ -10,15 +10,15 @@ aside {
 aside div {
     margin-bottom: 10px;
     text-decoration: none;
-    color: #333;
+    color: #001A23;
     &:hover {
         color: black;
     }
 }
 
 .category-button {
-    background-color: #9395D3;
-    color: #000807;
+    background-color: #732C2C;
+    color: #EFF7CF;
     border: none;
     text-align: center;
     text-decoration: none;
@@ -28,7 +28,7 @@ aside div {
     cursor: pointer;
     border-radius: 4px;
     &:hover {
-        background-color: #000807;
+        background-color: #001A23;
         color: #FBF9FF;
     }
 }
@@ -39,8 +39,8 @@ aside div {
     justify-content: center;
     .category {
         margin-bottom: 10px;
-        background-color: #9395D3;
-        color: #000807;
+        background-color: #732C2C;
+        color: #EFF7CF;
         border: none;
         text-align: center;
         text-decoration: none;
@@ -48,8 +48,9 @@ aside div {
         font-size: 1em;
         cursor: pointer;
         border-radius: 4px;
+        padding: 10px;
         &:hover {
-            background-color: #9395D3;
+            background-color: #001A23;
         }
     }
 

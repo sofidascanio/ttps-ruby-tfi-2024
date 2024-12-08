@@ -12,15 +12,17 @@
       <button class="carousel-button next">&gt;</button>
     </div>
     <div class="product-info">
-      <h1 id="product-name"><%= product.name %></h1>
-      <p id="product-description"><%= product.description %></p>
-      <p class="price">Precio: <span id="product-price"><%= number_to_currency(product.price, unit: "$", separator: ",", delimiter: ".") %></span></p>
+      <h1><%= product.name %></h1>
+      <p><%= product.description %></p>
+      <p class="price">Precio: <span><%= number_to_currency(product.price, unit: "$", separator: ",", delimiter: ".") %></span></p>
       <div class="color-display">
         <span>Color:</span>
-        <div id="color-square" style="background-color: <%= product.color %>;"></div>
+        <div class="color-square" style="background-color: <%= product.color %>;"></div>
       </div>
-      <p>Stock: <span id="product-stock"><%= product.stock %></span></p>
-      <p>Talle: <span id="product-stock"><%= product.size %></span></p>
+      <p>Stock: <span><%= product.stock %></span></p>
+      <% if product.size.present? %>
+        <p>Talle: <span><%= product.size %></span></p>
+      <% end %>
     </div>
   </div>
 </div>

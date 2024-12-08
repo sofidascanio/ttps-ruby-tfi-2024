@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    load_and_authorize_resource
     before_action :authenticate_user! 
     before_action :set_user, only: %i[ show edit update destroy ]
 
@@ -12,6 +13,9 @@ class UsersController < ApplicationController
     def new
         @user = User.new
         @roles = User.roles.keys.map { |role| [t("roles.#{role}"), role] }
+        unless can?(:assign, :admin_role)
+            @roles.reject! { |_, role| role == "admin" }
+        end
     end
 
     def create
@@ -26,11 +30,21 @@ class UsersController < ApplicationController
 
     def edit
         @roles = User.roles.keys.map { |role| [t("roles.#{role}"), role] }
+        unless can?(:assign, :admin_role)
+            @roles.reject! { |_, role| role == "admin" }
+        end
     end
 
     def update
+        previous_role = @user.role
         if @user.update(user_params)
-            redirect_to @user, notice: "Usuario actualizado exitosamente."
+            if previous_role != @user.role && @user == current_user
+                # usuario "admin" se cambio de rol mientras estaba logueado
+                sign_out @user
+                redirect_to root_path, notice: 'Se modifico su rol en el sistema. Ingrese de nuevo.'
+            else
+                redirect_to @user, notice: "Usuario actualizado exitosamente."
+            end
         else
             @roles = User.roles.keys.map { |role| [role.humanize, role] }
             render :edit, status: :unprocessable_entity
