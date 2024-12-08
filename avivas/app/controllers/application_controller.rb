@@ -20,6 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def load_categories
-    @categories = Category.order(created_at: :desc).page(params[:page])
+    @categories = Category.order(name: :asc).limit(10)
   end
 end

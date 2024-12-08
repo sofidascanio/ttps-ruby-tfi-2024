@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if @user.save
-            redirect_to users_path, notice: "Usuario creado exitosamente."
+            redirect_to @user, notice: "Usuario creado exitosamente."
         else
             @roles = User.roles.keys.map { |role| [role.humanize, role] }
             render :new, status: :unprocessable_entity
@@ -52,8 +52,21 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        @user.destroy
-        redirect_to users_path, notice: "Usuario eliminado exitosamente."
+        previous_state = @user.deleted_at
+        if @user.toggle!(:deleted_at)
+            if previous_state
+                redirect_to @user, notice: "Usuario activado exitosamente."
+            else
+                @user.update(password: Devise.friendly_token())
+                redirect_to @user, notice: "Usuario desactivado exitosamente."
+            end
+        else
+            if previous_state 
+                redirect_to @user, alert: "Error al activar el usuario."
+            else
+                redirect_to @user, alert: "Error al desactivar el usuario."
+            end
+        end
     end
 
     private

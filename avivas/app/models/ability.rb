@@ -18,7 +18,6 @@ class Ability
         can :manage, User
         cannot :create, User, role: 0
         cannot :update, User, role: 0
-        cannot :assign, :admin_role
 
         return unless user.admin?
         can :manage, :all 

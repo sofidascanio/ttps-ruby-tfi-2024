@@ -90,5 +90,13 @@
             background-color: #d32f2f;
         }
     }
+    .restore-link {
+        background-color: #3672f4;
+        padding: 10px 15px;
+        color: white;
+        &:hover {
+            background-color: #1a61fc;
+        }
+    }
 
 }

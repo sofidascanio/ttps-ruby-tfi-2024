@@ -5,9 +5,13 @@
     <div class="links-container">
       <%= link_to t('back_to') + ' ' + t('users'), users_path, class: "link back-link"  %>
 
-      <%= link_to t('edit') + ' ' + t('user'), edit_user_path(@user), class: "link edit-link"  %>
+      <%= link_to t('edit') + ' ' + t('user'), edit_user_path(@user), class: "link edit-link"  %> 
 
-      <%= button_to t('delete') + ' ' + t('user'), @user, method: :delete, class: "link delete-link"  %> 
+      <% if @user.deleted_at %>
+        <%= button_to t('restore') + ' ' + t('user'), @user, method: :delete, class: "link restore-link" %>
+      <% else %>
+        <%= button_to t('delete') + ' ' + t('user'), @user, method: :delete, class: "link delete-link" %>
+      <% end %>
     </div>
 
   </div>
