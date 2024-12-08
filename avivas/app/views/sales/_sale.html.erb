@@ -14,10 +14,10 @@
   <table>
     <thead>
       <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Ver Producto </th>
+        <th> Producto </th>
+        <th> Cantidad </th>
+        <th> Precio </th>
+        <th> Detalle </th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +26,12 @@
           <td><%= product_sale.product.name %></td>
           <td><%= product_sale.quantity %></td>
           <td><%= product_sale.price %></td>
-          <td><%= link_to link_to t('show') + ' ' + t('product'), product_sale.product, class: "link-button"  %>  </td>
+          <td>
+           <%= link_to product_path(product_sale.product), class: "view-link" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#000000" d="M22 3H2v6h1v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9h1zM4 5h16v2H4zm15 15H5V9h14zM9 11h6a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2"/></svg>
+          <% end %>
+          
+           </td>
         </tr>
       <% end %>
     </tbody>

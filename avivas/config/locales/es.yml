@@ -15,6 +15,7 @@ es:
   back_to: "Volver a"
   delete: "Eliminar"
   restore: "Restaurar"
+  cancel: "Cancelar"
   roles:
     admin: "Administrador"
     manager: "Gerente"

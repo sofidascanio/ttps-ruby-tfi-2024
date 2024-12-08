@@ -41,9 +41,22 @@
     <%= form.color_field :color %>
   </div>
 
-  <div class="form-group"> 
+  <div class="form-group">
     <%= form.label :category_ids, "Categorías", class:"form-label" %>
-    <%= form.collection_select :category_ids, @categories, :id, :name, { multiple: true }, { class: "form-category-select" } %>
+    <div class="category-selection-container">
+        <div class="category-list">
+            <%= select_tag 'available_categories', options_from_collection_for_select(@categories.reject { |cat| product.categories.include?(cat) }, :id, :name), multiple: true, class: "form-category-select" %>
+        </div>
+        
+        <div class="category-arrows">
+          <button type="button" class="category-button" id="add-category-button"> > </button>
+          <button type="button" class="category-button" id="remove-category-button"> < </button>
+        </div>
+        
+        <div class="category-list">
+            <%= select_tag 'selected_categories', options_from_collection_for_select(product.categories, :id, :name), multiple: true, class: "form-category-select" %>
+        </div>
+    </div>
   </div>
 
   <div class="form-group">
@@ -83,11 +96,29 @@
   document.getElementById('productImages').addEventListener('change', function(e) {
     var status = document.getElementById('file-upload-status');
     if (e.target.files.length > 0) {
-      status.textContent = e.target.files.length + ' archivo(s) seleccionado(s)';
+      status.textContent = e.target.files.length + ' imagen(es) seleccionada(s)';
       status.classList.add('files-selected');
     } else {
-      status.textContent = 'No se han seleccionado archivos';
+      status.textContent = 'No se han seleccionado imagenes';
       status.classList.remove('files-selected');
     }
+  });
+
+  document.getElementById('add-category-button').addEventListener('click', function() {
+    var available = document.getElementById('available_categories');
+    var selected = document.getElementById('selected_categories');
+    var selectedOptions = Array.from(available.selectedOptions);
+    selectedOptions.forEach(function(option) {
+      selected.add(option);
+    });
+  });
+
+  document.getElementById('remove-category-button').addEventListener('click', function() {
+    var available = document.getElementById('available_categories');
+    var selected = document.getElementById('selected_categories');
+    var selectedOptions = Array.from(selected.selectedOptions);
+    selectedOptions.forEach(function(option) {
+      available.add(option);
+    });
   });
 <% end %>

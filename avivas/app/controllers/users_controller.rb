@@ -52,8 +52,8 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        previous_state = @user.deleted_at
-        if @user.toggle!(:deleted_at)
+        previous_state = @user.is_deleted
+        if @user.toggle!(:is_deleted)
             if previous_state
                 redirect_to @user, notice: "Usuario activado exitosamente."
             else

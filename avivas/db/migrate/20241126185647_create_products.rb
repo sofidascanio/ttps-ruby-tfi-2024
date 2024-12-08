@@ -6,7 +6,7 @@ class CreateProducts < ActiveRecord::Migration[8.0]
       t.float :price
       t.integer :stock
       t.string :color
-      t.datetime :deleted_at
+      t.datetime :is_deleted
 
       t.timestamps
     end

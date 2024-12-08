@@ -23,8 +23,17 @@
       <% if product.size.present? %>
         <p>Talle: <span><%= product.size %></span></p>
       <% end %>
+      <% if user_signed_in?  %>
+        <% if product.is_deleted  %>
+          <p>Fecha de Baja: <span><%= product.deleted_at.strftime("%d/%m/%Y, %H:%M") %></span></p>
+        <% end %>
+      <% end %>
+
     </div>
   </div>
+  <% product.categories.each do |category| %>
+ <h3><%= category.name %></h3>
+  <% end %>
 </div>
 
 <%= javascript_tag do %>

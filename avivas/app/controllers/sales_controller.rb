@@ -39,10 +39,8 @@ class SalesController < ApplicationController
       @sale.sale_price = @sale.product_sales.sum { |ps| ps.quantity * ps.price }
   
       respond_to do |format|
-        # Chequear stock antes de intentar guardar
         if @sale.valid? && check_stock_availability(@sale)
           if @sale.save
-            # Actualizar el stock de los productos
             @sale.product_sales.each do |product_sale|
               product = product_sale.product
               product.update!(stock: product.stock - product_sale.quantity)
@@ -80,7 +78,14 @@ class SalesController < ApplicationController
 
   # DELETE /sales/1 or /sales/1.json
   def destroy
-    @sale.destroy!
+    @sale.update(is_deleted: true)
+
+    @sale.product_sales.each do |product_sale|
+      # devuelvo stock al producto
+      product = product_sale.product
+      product.stock += product_sale.quantity
+      product.update(stock: product.stock)
+    end
 
     respond_to do |format|
       format.html { redirect_to sales_path, status: :see_other, notice: "Se eliminó la venta." }

@@ -6,7 +6,7 @@
     <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "link back-link"  %>
       <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale), class: "link edit-link"  %> 
 
-      <%= button_to t('delete') + ' ' + t('sale'), @sale, method: :delete, class: "link delete-link"  %> 
+      <%= button_to t('cancel') + ' ' + t('sale'), @sale, method: :delete, class: "link delete-link"  %> 
     </div>
   </div>
 </div>

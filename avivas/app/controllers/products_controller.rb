@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @q = Product.ransack(params[:q])  
-    @products = @q.result(distinct: true).order(created_at: :desc).page(params[:page]).per(12)
+    @products = @q.result(distinct: true).where(is_deleted: false).order(created_at: :desc).page(params[:page]).per(12)
   end
 
   # GET /products/1 or /products/1.json
@@ -41,19 +41,35 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1 or /products/1.json
   def update
-    # Eliminar imágenes seleccionadas
+    # Manejo categorias
+    # Agarro las dos "listas", borro las que ya no estan relacionadas, agrego las que si
+    categories_to_add = params[:selected_categories] || []
+    categories_to_remove = params[:available_categories] || []
+
+    categories_to_remove.each do |category_id|
+      category = Category.find(category_id)
+      @product.categories.delete(category)
+    end
+
+    categories_to_add.each do |category_id|
+      category = Category.find(category_id)
+      @product.categories << category unless @product.categories.include?(category)
+    end
+
+    # Manejo imagenes
+    # Borro las imagenes seleccionadas para eliminar
+    # Agrego las nuevas imagenes (sin borrar las que ya estan agregadas)
+
     if params[:product][:images_to_remove].present?
       params[:product][:images_to_remove].each do |index|
         @product.images[index.to_i].purge
       end
     end
 
-    # Agregar nuevas imágenes (sin borrar las existentes)
     if params[:product][:images].present?
       @product.images.attach(params[:product][:images])
     end
 
-    # Actualizar otros atributos del producto
     respond_to do |format|
       if @product.update(product_params.except(:images))
         format.html { redirect_to @product, notice: "Se actualizo el producto." }
@@ -68,7 +84,7 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.destroy!
+    @product.update(is_deleted: true, stock: 0, deleted_at: Time.now)
 
     respond_to do |format|
       format.html { redirect_to products_path, status: :see_other, notice: "Se elimino el producto." }

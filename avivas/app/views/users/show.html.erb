@@ -7,7 +7,7 @@
 
       <%= link_to t('edit') + ' ' + t('user'), edit_user_path(@user), class: "link edit-link"  %> 
 
-      <% if @user.deleted_at %>
+      <% if @user.is_deleted %>
         <%= button_to t('restore') + ' ' + t('user'), @user, method: :delete, class: "link restore-link" %>
       <% else %>
         <%= button_to t('delete') + ' ' + t('user'), @user, method: :delete, class: "link delete-link" %>
