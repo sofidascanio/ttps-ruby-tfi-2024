@@ -77,7 +77,7 @@
         <aside>
             <div class="category-link"> <a href="/categories" class="category"> Categorias </a> </div>
             <div>
-                <% @categories.each do |category| %>
+                <% @side_categories.each do |category| %>
                     <div>
                     <%= link_to category.name, category_path(category), class: "category-button" %>
                     </div>

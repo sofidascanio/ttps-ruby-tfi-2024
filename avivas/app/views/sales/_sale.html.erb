@@ -8,35 +8,42 @@
       <p><strong>Precio Total:</strong> <%= sale.sale_price %></p>
       <p><strong>Empleado:</strong> <%=  sale.user.username %></p>
       <p><strong>Cliente:</strong> <%= sale.client %></p>
+       <p><strong>Estado:</strong>  <%= sale.is_deleted ? "Cancelada" : "Completada" %></p>
   </div>
 
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th> Producto </th>
-        <th> Cantidad </th>
-        <th> Precio </th>
-        <th> Detalle </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% sale.product_sales.each do |product_sale| %>
+  <div class="table-container">
+    <table>
+      <thead>
         <tr>
-          <td><%= product_sale.product.name %></td>
-          <td><%= product_sale.quantity %></td>
-          <td><%= product_sale.price %></td>
-          <td>
-           <%= link_to product_path(product_sale.product), class: "view-link" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#000000" d="M22 3H2v6h1v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9h1zM4 5h16v2H4zm15 15H5V9h14zM9 11h6a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2"/></svg>
-          <% end %>
-          
-           </td>
+          <th> Producto </th>
+          <th> Cantidad </th>
+          <th> Precio </th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% sale.product_sales.each do |product_sale| %>
+          <tr data-url="<%= product_path(product_sale.product) %>" class="clickable-row">
+            <td><%= product_sale.product.name %></td>
+            <td><%= product_sale.quantity %></td>
+            <td><%= product_sale.price %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
+<%= javascript_tag do %>
+  document.addEventListener('turbo:load', () => {
+    document.querySelectorAll(".clickable-row").forEach(row => {
+      row.addEventListener("click", function () {
+        const url = this.dataset.url;
+        if (url) {
+          window.location.href = url;
+        }
+      });
+    });
+  }); 
 
-</div>
+<% end %>

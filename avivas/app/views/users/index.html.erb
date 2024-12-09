@@ -14,26 +14,16 @@
           <th> Rol </th>
           <th> Fecha de Ingreso </th>
           <th> Estado </th>
-          <th> Ver usuario </th>
         </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <tr>
+        <tr data-url="<%= user_path(user) %>" class="clickable-row">
           <td> <%= user.username %> </td>
           <td> <%= user.email %> </td>
           <td> <%=  t("roles.#{user.role}") %> </td>
           <td> <%= user.entered_at %> </td>
           <td>  <%= user.is_deleted ? "Inactivo" : "Activo" %> </td>
-          <td>
-            <%= link_to user_path(user), class: "view-link" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="30" viewBox="0 0 36 36">
-                <circle cx="16.86" cy="9.73" r="6.46" fill="#c01c28"/>
-                <path fill="#c01c28" d="M21 28h7v1.4h-7z"/>
-                <path fill="#c01c28" d="M15 30v3a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1V23a1 1 0 0 0-1-1h-7v-1.47a1 1 0 0 0-2 0V22h-2v-3.58a32 32 0 0 0-5.14-.42a26 26 0 0 0-11 2.39a3.28 3.28 0 0 0-1.88 3V30Zm17 2H17v-8h7v.42a1 1 0 0 0 2 0V24h6Z"/>
-              </svg>
-            <% end %>
-          </td>
         </tr>
       <% end %>
     </tbody>
@@ -42,3 +32,16 @@
 
 <%= paginate @users %>
 
+<%= javascript_tag do %>
+  document.addEventListener('turbo:load', () => {
+  document.querySelectorAll(".clickable-row").forEach(row => {
+    row.addEventListener("click", function () {
+      const url = this.dataset.url;
+      if (url) {
+        window.location.href = url;
+      }
+    });
+  });
+});
+
+<% end %>
