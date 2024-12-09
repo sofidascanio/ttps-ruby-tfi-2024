@@ -6,8 +6,15 @@
   <div class="links-container">
     <%= link_to t('back_to') + ' ' + t('products'), products_path, class: "link back-link"  %>
     <% if user_signed_in? %>
-      <%= link_to t('edit') + ' ' + t('product'), edit_product_path(@product), class: "link edit-link"  %>
-      <%= button_to t('delete') + ' ' + t('product'), @product, method: :delete, class: "link delete-link"  %>
+      <% if !@product.is_deleted %>
+          <% if can? :update, @product %>
+            <%= link_to t('edit') + ' ' + t('product'), edit_product_path(@product), class: "link edit-link"  %>
+          <% end %>
+
+          <% if can? :destroy, @product %>
+            <%= button_to t('delete') + ' ' + t('product'), @product, method: :delete, class: "link delete-link"  %>
+          <% end %>
+      <% end %>
     <% end %>
   </div>
 

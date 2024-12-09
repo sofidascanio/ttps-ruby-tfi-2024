@@ -25,13 +25,11 @@
         text-transform: uppercase;
         font-family: 'Cabin', sans-serif;
     }
-    
-    tr:hover {
+}
+
+.clickable-row {
+    cursor: pointer;
+    &:hover {
         background-color: #b52d2f;
-        color: #d9d6d0;
-    }
-    
-    td:hover {
-        cursor: pointer;
     }
 }

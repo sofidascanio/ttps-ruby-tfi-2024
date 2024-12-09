@@ -47,8 +47,12 @@
             <div class="nav-left">
                 <a href="/products" class="nav-button"> Productos </a>
                 <% if user_signed_in? %>
-                    <a href="/sales" class="nav-button"> Ventas </a>
-                    <a href="/users" class="nav-button"> Usuarios </a>
+                    <% if can? :read, Sale %>
+                        <a href="/sales" class="nav-button"> Ventas </a>
+                    <% end %>
+                    <% if can? :read, User %>
+                        <a href="/users" class="nav-button"> Usuarios </a>
+                    <% end %>
                 <% end %>
             </div>
             <div class="nav-center"> 

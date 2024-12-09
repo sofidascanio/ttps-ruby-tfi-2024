@@ -6,8 +6,14 @@
   <div class="user-show-content">
       <p><strong>Fecha y Hora:</strong> <%= sale.created_at.strftime("%d/%m/%Y, %H:%M") %></p>
       <p><strong>Precio Total:</strong> <%= sale.sale_price %></p>
-      <p class="clickable-row" data-url="<%= user_path(sale.user) %>"><strong>Empleado:</strong> <%= sale.user.username %></p>      <p><strong>Cliente:</strong> <%= sale.client %></p>
-       <p><strong>Estado:</strong>  <%= sale.is_deleted ? "Cancelada" : "Completada" %></p>
+      <% if can? :read, sale.user %>
+        <p class="clickable-row" data-url="<%= user_path(sale.user) %>">
+      <% else %>
+        <p>
+      <% end %>
+      <strong>Empleado:</strong> <%= sale.user.username %></p>      
+      <p><strong>Cliente:</strong> <%= sale.client %></p>
+      <p><strong>Estado:</strong>  <%= sale.is_deleted ? "Cancelada" : "Completada" %></p>
   </div>
 
   <div class="table-container">
@@ -21,7 +27,11 @@
       </thead>
       <tbody>
         <% sale.product_sales.each do |product_sale| %>
+        <% if can? :read, product_sale.product %>
           <tr data-url="<%= product_path(product_sale.product) %>" class="clickable-row">
+        <% else %>
+          <tr>
+        <% end %>
             <td><%= product_sale.product.name %></td>
             <td><%= product_sale.quantity %></td>
             <td><%= product_sale.price %></td>

@@ -3,10 +3,17 @@
     <%= render @sale %>
 
     <div class="links-container">
-    <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "link back-link"  %>
-      <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale), class: "link edit-link"  %> 
+      <%= link_to t('back_to') + ' ' + t('sales'), sales_path, class: "link back-link"  %>
 
-      <%= button_to t('cancel') + ' ' + t('sale'), @sale, method: :delete, class: "link delete-link"  %> 
+      <% if !@sale.is_deleted %>
+          <% if can? :update, @sale %>
+            <%= link_to t('edit') + ' ' + t('sale'), edit_sale_path(@sale), class: "link edit-link"  %> 
+          <% end %>
+
+          <% if can? :destroy, @sale %>
+            <%= button_to t('cancel') + ' ' + t('sale'), @sale, method: :delete, class: "link delete-link"  %> 
+          <% end %>
+      <% end %>
     </div>
   </div>
 </div>
