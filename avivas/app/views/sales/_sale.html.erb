@@ -6,8 +6,7 @@
   <div class="user-show-content">
       <p><strong>Fecha y Hora:</strong> <%= sale.created_at.strftime("%d/%m/%Y, %H:%M") %></p>
       <p><strong>Precio Total:</strong> <%= sale.sale_price %></p>
-      <p><strong>Empleado:</strong> <%=  sale.user.username %></p>
-      <p><strong>Cliente:</strong> <%= sale.client %></p>
+      <p class="clickable-row" data-url="<%= user_path(sale.user) %>"><strong>Empleado:</strong> <%= sale.user.username %></p>      <p><strong>Cliente:</strong> <%= sale.client %></p>
        <p><strong>Estado:</strong>  <%= sale.is_deleted ? "Cancelada" : "Completada" %></p>
   </div>
 

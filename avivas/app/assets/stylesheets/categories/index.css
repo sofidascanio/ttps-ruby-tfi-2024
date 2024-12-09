@@ -5,8 +5,8 @@
 }
 
 .category-box {
-    background-color: #B3B7EE;
-    border: 1px solid #bebfec;
+    background-color: #d9d6d0;
+    border: 1px solid #683836;
     border-radius: 8px;
     padding: 1rem;
     text-align: center;
@@ -18,7 +18,8 @@
         margin: 0;
         padding: 1rem;
         font-size: 1.2rem;
-        color: #000807;
+        color: #000104;
+        font-family: 'Cabin', sans-serif;
         .link-button {
             text-decoration: none;
             color: inherit;

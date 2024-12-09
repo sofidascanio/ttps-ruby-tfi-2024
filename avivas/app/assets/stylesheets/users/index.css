@@ -4,28 +4,31 @@
     align-items: center;
     width: 100%;
     padding: 20px;
+    font-family: 'Montserrat', sans-serif;
     table {
         width: 80%;
         border-collapse: collapse;
-        background-color: #FBF9FF;
+        background-color: #d9d6d0;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
     
     th, td {
         text-align: center;
         padding: 12px 15px;
-        border-bottom: 1px solid #A2A3BB;
+        border-bottom: 1px solid #683836;
     }
     
     th {
-        background-color: #9395D3;
-        color: #FBF9FF;
+        background-color: #683836;
+        color: #d9d6d0;
         font-weight: bold;
         text-transform: uppercase;
+        font-family: 'Cabin', sans-serif;
     }
     
     tr:hover {
-        background-color: #A2A3BB;
+        background-color: #b52d2f;
+        color: #d9d6d0;
     }
     
     td:hover {

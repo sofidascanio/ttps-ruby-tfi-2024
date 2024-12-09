@@ -4,16 +4,19 @@ Rails.application.routes.draw do
   resources :products
   resources :users 
 
-  devise_scope :user do
-    # solo login y editar perfil
-    get 'auth/sign_in', to: 'devise/sessions#new', as: :new_user_session
-    post 'auth/sign_in', to: 'devise/sessions#create', as: :user_session
-    delete 'auth/sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  #devise_for :users, path: 'auth', skip: [:all] 
+  devise_for :users, path: 'auth'
 
-    get 'auth/edit', to: 'devise/registrations#edit', as: :edit_user_registration
-    patch 'auth', to: 'devise/registrations#update', as: :user_registration
-    put 'auth', to: 'devise/registrations#update' 
-  end
+  # devise_scope :user do
+  #   # solo login y editar perfil
+  #   get 'auth/sign_in', to: 'devise/sessions#new', as: :new_user_session
+  #   post 'auth/sign_in', to: 'devise/sessions#create', as: :user_session
+  #   delete 'auth/sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+
+  #   get 'auth/edit', to: 'devise/registrations#edit', as: :edit_user_registration
+  #   patch 'auth', to: 'devise/registrations#update', as: :user_registration
+  #   put 'auth', to: 'devise/registrations#update' 
+  # end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -15,8 +15,8 @@
     }
     
     .add-button {
-        background-color: #9395D3;
-        color: #000807;
+        background-color: #683836;
+        color: #d9d6d0;
         padding: 10px 15px;
         text-decoration: none;
         border-radius: 5px;
@@ -105,7 +105,7 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     &:focus {
         outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        box-shadow: 0 0 0 0.2rem rgba(95, 14, 8, 0.25);
     }
 }
 
@@ -117,8 +117,8 @@
 }
 
 .search-form-submit {
-    background-color: #9395D3;
-    color: #000807;
+    background-color: #683836;
+    color: #d9d6d0;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -126,6 +126,6 @@
     cursor: pointer;
     transition: background-color 0.15s ease-in-out;
     &:hover {
-        background-color: #B3B7EE;
+        background-color: #b52d2f;
     }
 }

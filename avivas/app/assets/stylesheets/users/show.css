@@ -1,34 +1,56 @@
 .user-container {
-    background-color: white;
+    background-color: #d9d6d0;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 50%;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .user-show-header {
-    background-color: #9395D3;
-    color: #000807;
+    background-color: #683836;
+    color: #d9d6d0;
     padding: 15px;
     margin: -20px -20px 15px -20px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     text-align: center;
+    h1 {
+        font-size: 1.4em;
+        margin: 0;
+        font-family: 'Cabin', sans-serif;
+    }
 }
-h1 {
-    font-size: 1.4em;
-    margin: 0;
-}
-.user-show-content p {
-    margin: 10px 0;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-.user-show-content p:last-of-type {
-    border-bottom: none;
-}
-strong {
-    color: #000807;
-    display: inline-block;
-    width: 30%;
+
+.user-show-content {
+    p { 
+        margin: 0;
+        position: relative;
+        padding: 10px 0;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background-color: #b52d2f;
+        }
+        &:last-of-type::after {
+            display: none;
+        }
+        strong {
+            color: #000104;
+            display: inline-block;
+            width: 30%;
+            padding-right: 10px;
+        }
+    }
+    
+    .clickable-row {
+        cursor: pointer;
+        &:hover {
+            background-color: #b52d2f;
+        }
+    }
 }

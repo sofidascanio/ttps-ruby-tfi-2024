@@ -1,24 +1,24 @@
 aside {
     width: 200px;
-    background-color: #732C2C;
-    color: #EFF7CF;
+    background-color: #683836;
+    color: #d9d6d0;
     padding: 20px;
     height: 100%;
     overflow-y: auto;
-}
-
-aside div {
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: #001A23;
-    &:hover {
-        color: black;
+    font-family: 'Cabin', sans-serif;
+    div {
+        margin-bottom: 10px;
+        text-decoration: none;
+        color: #d9d6d0;
+        &:hover {
+            color: #b52d2f;
+        }
     }
 }
 
 .category-button {
-    background-color: #732C2C;
-    color: #EFF7CF;
+    background-color: #683836;
+    color: #d9d6d0;
     border: none;
     text-align: center;
     text-decoration: none;
@@ -28,8 +28,8 @@ aside div {
     cursor: pointer;
     border-radius: 4px;
     &:hover {
-        background-color: #001A23;
-        color: #FBF9FF;
+        background-color: #b52d2f;
+        color: #d9d6d0;
     }
 }
 
@@ -39,8 +39,8 @@ aside div {
     justify-content: center;
     .category {
         margin-bottom: 10px;
-        background-color: #732C2C;
-        color: #EFF7CF;
+        background-color: #683836;
+        color: #d9d6d0;
         border: none;
         text-align: center;
         text-decoration: none;
@@ -50,8 +50,7 @@ aside div {
         border-radius: 4px;
         padding: 10px;
         &:hover {
-            background-color: #001A23;
+            background-color: #b52d2f;
         }
     }
-
 }

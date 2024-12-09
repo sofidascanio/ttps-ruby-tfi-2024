@@ -1,106 +1,109 @@
-header {
-    background-color: #732C2C;
-    color: #EFF7CF;
+.header-container {
+    background-color: #683836;
+    color: #d9d6d0;
     padding: 20px 20px;
-}
-
-.page-title {
-    display: flex;
-    align-items: center; 
-    .icon {
-        width: 40px; 
-        height: 40px; 
-        margin-right: 15px; 
-    }
-    h1 {
-        font-size: 2em;
-        font-weight: bold;
-        color: #EFF7CF;
-    }
-    a.link {
-        text-decoration: none;
-        color: inherit;
-    }
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-left, .nav-right, .nav-center {
-    display: flex;
-    gap: 15px;
-}
-
-.nav-center {
-    flex-grow: 1;
-    justify-content: center;
-    align-items: center; 
-    text-align: center;
-}
-
-.nav-button {
-    background-color: #732C2C;
-    color: #EFF7CF;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    &:hover {
-        background-color: #000807;
-        color: #FBF9FF;
-    }
-}
-
-.notice, .alert {
-    padding: 10px;
-    margin: 0;
-    border-radius: 5px;
-    font-size: 1em;
-    font-weight: bold;
-    text-align: center;
-    animation: fadeOut 0.5s ease-out 4s forwards;
-    position: fixed;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-}
-
-.notice {
-    background-color: #4CAF50;
-    color: #000807;
-    border: 1px solid #000807;
-}
-
-.alert {
-    background-color: #F44336; 
-    color: 000807;
-    border: 1px solid #000807;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
+    font-family: 'Montserrat', sans-serif;
     
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .nav-left, .nav-right, .nav-center {
+            display: flex;
+            gap: 15px;
+            .nav-button {
+                background-color: #683836;
+                color: #d9d6d0;
+                border: none;
+                padding: 10px 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 4px;
+                &:hover {
+                    background-color: #b52d2f;
+                    color: #d9d6d0;
+                }
+            }
+        }
+        
+        .nav-center {
+            flex-grow: 1;
+            justify-content: center;
+            align-items: center; 
+            text-align: center;
+
+            .page-title {
+                display: flex;
+                align-items: center; 
+                .icon {
+                    width: 40px; 
+                    height: 40px; 
+                    margin-right: 15px; 
+                }
+                h1 {
+                    font-size: 2em;
+                    font-weight: bold;
+                    color: #d9d6d0;
+                    font-family: 'Cabin', sans-serif;
+                }
+                a.link {
+                    text-decoration: none;
+                    color: inherit;
+                }
+            }
+
+            .notice, .alert {
+                font-family: 'Cabin', sans-serif;
+                padding: 10px;
+                margin: 5px;
+                border-radius: 5px;
+                font-size: 1em;
+                font-weight: bold;
+                text-align: center;
+                animation: fadeOut 0.5s ease-out 4s forwards;
+                position: fixed;
+                top: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+            }
+            
+            .notice {
+                background-color: #d9d6d0;
+                color: #000104;
+                border: 1px solid #000104;
+            }
+            
+            .alert {
+                background-color: #b52d2f; 
+                color: #d9d6d0;
+                border: 1px solid #000104;
+            }
+            
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+                
+            }
+        }
+        
+    }
 }
