@@ -8,6 +8,6 @@ class ProductSale < ApplicationRecord
 
   def return_stock
     product.stock += self.quantity
-    product.save
+    product.save!
   end
 end

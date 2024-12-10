@@ -1,4 +1,17 @@
 <%= form_with(model: @user, local: true, class: "form") do |form| %>
+  <% if user.errors.any? %>
+    <div class="error-container">
+      <h2 class="error-title">
+        No se pudo guardar el usuario
+      </h2>
+      <div class="error-list">
+        <% user.errors.each do |error| %>
+          <span class="error-item"><%= error.full_message %></span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= form.label :username, class:"form-label" %>
     <%= form.text_field :username, class:"form-input" %>

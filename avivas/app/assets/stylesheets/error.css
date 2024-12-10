@@ -1,0 +1,32 @@
+.error-container {
+    background-color: #fff5f5;
+    border: 1px solid #fc8181;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(252, 129, 129, 0.1);
+    .error-title {
+        color: #e53e3e;
+        font-size: 18px;
+        margin-top: 0;
+        margin-bottom: 12px;
+    }
+    
+    .error-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+    
+    .error-item {
+        color: #000807;
+        font-size: 14px;
+        padding: 8px 0;
+        border-top: 1px solid #fed7d7;
+        &:first-child {
+            border-top: none;
+        }
+    }
+}
+
+  

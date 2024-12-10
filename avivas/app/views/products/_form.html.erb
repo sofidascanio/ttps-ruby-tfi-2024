@@ -1,13 +1,14 @@
 <%= form_with(model: product, class: "form") do |form| %>
   <% if product.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(product.errors.count, "error") %> impidieron guardar el producto:</h2>
-
-      <ul>
+    <div class="error-container">
+      <h2 class="error-title">
+        No se pudo guardar el producto:
+      </h2>
+      <div class="error-list">
         <% product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <span class="error-item"><%= error.full_message %></span>
         <% end %>
-      </ul>
+      </div>
     </div>
   <% end %>
 
