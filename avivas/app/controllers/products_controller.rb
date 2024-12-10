@@ -27,6 +27,13 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
 
+    categories_to_add = params[:selected_categories] || []
+
+    categories_to_add.each do |category_id|
+      category = Category.find_by(id: category_id)
+      @product.categories << category
+    end
+
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: "Se creo el producto." }
