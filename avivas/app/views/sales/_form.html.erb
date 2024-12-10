@@ -25,9 +25,10 @@
           <%= product_sale_form.number_field :quantity, min: 1 %>
           
           <%= product_sale_form.hidden_field :price %>
-          
+
           <%= product_sale_form.check_box :_destroy %>
           <%= product_sale_form.label :_destroy, "Eliminar este producto" %>
+
         </div>
       <% end %>
     </div>
@@ -68,7 +69,7 @@
       <input type="number" name="sale[product_sales_attributes][${productIndex}][quantity]" id="sale_product_sales_attributes_${productIndex}_quantity" min="0" value="1" />
       
       <input type="hidden" name="sale[product_sales_attributes][${productIndex}][price]" value="" />
-      
+
       <input type="checkbox" name="sale[product_sales_attributes][${productIndex}][_destroy]" id="sale_product_sales_attributes_${productIndex}__destroy" value="1" />
       <label for="sale_product_sales_attributes_${productIndex}__destroy">Eliminar este producto</label>
     `;
@@ -85,8 +86,6 @@
       const selectedOption = this.options[this.selectedIndex];
       const priceField = this.closest('.product-item').querySelector('input[name$="[price]"]');
       if (selectedOption.value) {
-        // In a real application, you would fetch the price from the server or a data attribute
-        // For this example, we'll set a dummy price
         priceField.value = (parseFloat(selectedOption.value) * 10).toFixed(2); // Dummy price calculation
       } else {
         priceField.value = '';

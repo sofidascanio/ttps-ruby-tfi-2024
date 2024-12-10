@@ -20,6 +20,9 @@
         padding: 10px 15px;
         text-decoration: none;
         border-radius: 5px;
+        &:hover {
+            background-color: #b52d2f;
+        }
     }
     
     .products-container {

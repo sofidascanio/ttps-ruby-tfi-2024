@@ -39,7 +39,7 @@ class SalesController < ApplicationController
       @sale.sale_price = @sale.product_sales.sum { |ps| ps.quantity * ps.price }
   
       respond_to do |format|
-        if @sale.valid? && check_stock_availability(@sale)
+        if @sale.valid? && check_stock(@sale)
           if @sale.save
             @sale.product_sales.each do |product_sale|
               product = product_sale.product
@@ -49,10 +49,12 @@ class SalesController < ApplicationController
             format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
+            @products = Product.all
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @sale.errors, status: :unprocessable_entity }
           end
         else
+          @products = Product.all
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @sale.errors, status: :unprocessable_entity }
         end
@@ -62,17 +64,58 @@ class SalesController < ApplicationController
   
 
   # PATCH/PUT /sales/1 or /sales/1.json
-  def update    
-    # no se usa el update, consultar
-
-    respond_to do |format|
-      if @sale.update(sale_params)
-        format.html { redirect_to @sale, notice: "Se actualizó la venta." }
-        format.json { render :show, status: :ok, location: @sale }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @sale.errors, status: :unprocessable_entity }
-      end
+    def update
+      Sale.transaction do
+        # calculo precio de vuelta, por si cambio
+        @sale.sale_price = @sale.product_sales.sum { |ps| ps.quantity * ps.price }
+    
+        respond_to do |format|
+          if @sale.valid?
+            if @sale.update(sale_params)
+              @sale.product_sales.each do |product_sale|
+                  product = product_sale.product
+      
+                  # Cambio el stock de los productos
+                  if product_sale.saved_change_to_quantity
+                    # metodo de active record: saved_change_to_quantity 
+                    # para saber si cambio 'quantity': si se cambio, devuelve un array con dos valores
+                    # [valor previo, valor nuevo]
+                    # & -> si es nil, no hace la consulta
+                    # first -> devuelve el primer elemento (el valor previo)
+                    # si no tiene valor, toma el valor de 'quantity'
+                    previous_quantity = product_sale.saved_change_to_quantity&.first || product_sale.quantity
+                    stock_difference = previous_quantity - product_sale.quantity
+                    # si aumento la cantidad pedida
+                    if stock_difference > 0 
+                      # si la cantidad pedida es mayor al stock disponible
+                      if product.stock < stock_difference
+                        sale.errors.add(:base, "El producto '#{product.name}' no tiene suficiente stock disponible. Stock actual: #{product.stock}, solicitado: #{stock_difference}.")
+                      else
+                        product.stock += stock_difference
+                        product.save!
+                      end
+                    else 
+                      # si la cantidad pedida no es mayor al stock disponible, descuento
+                      product.stock += stock_difference
+                      product.save!
+                    end
+                  end
+                  # el stock de los productos borrados se devuelve en la bd
+              end
+    
+              format.html { redirect_to @sale, notice: "Venta actualizada exitosamente." }
+              format.json { render :show, status: :created, location: @sale }
+            else
+              @products = Product.all
+              format.html { render :new, status: :unprocessable_entity }
+              format.json { render json: @sale.errors, status: :unprocessable_entity }
+            end
+          else
+            @products = Product.all
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @sale.errors, status: :unprocessable_entity }
+          end
+        end
     end
   end
 
@@ -88,7 +131,7 @@ class SalesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to sales_path, status: :see_other, notice: "Se eliminó la venta." }
+      format.html { redirect_to sales_path, status: :see_other, notice: "Se cancelo la venta." }
       format.json { head :no_content }
     end
   end
@@ -105,7 +148,7 @@ class SalesController < ApplicationController
     params.require(:sale).permit(:sale_price, :client, product_sales_attributes: [:id, :product_id, :quantity, :price, :_destroy])
   end
 
-  def check_stock_availability(sale)
+  def check_stock(sale)
     sale.product_sales.each do |product_sale|
       product = product_sale.product
       if product && product.stock < product_sale.quantity
@@ -113,6 +156,6 @@ class SalesController < ApplicationController
         return false
       end
     end
-    true
+    return true
   end
 end

@@ -20,6 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def load_categories
-    @side_categories = Category.order(name: :asc).limit(10)
+    @side_categories = Category.order(name: :asc).limit(5)
   end
 end

@@ -27,15 +27,15 @@
       </thead>
       <tbody>
         <% sale.product_sales.each do |product_sale| %>
-        <% if can? :read, product_sale.product %>
-          <tr data-url="<%= product_path(product_sale.product) %>" class="clickable-row">
-        <% else %>
-          <tr>
-        <% end %>
-            <td><%= product_sale.product.name %></td>
-            <td><%= product_sale.quantity %></td>
-            <td><%= product_sale.price %></td>
-          </tr>
+          <% if can? :read, product_sale.product %>
+            <tr data-url="<%= product_path(product_sale.product) %>" class="clickable-row">
+          <% else %>
+            <tr>
+          <% end %>
+              <td><%= product_sale.product.name %></td>
+              <td><%= product_sale.quantity %></td>
+              <td><%= product_sale.price %></td>
+            </tr>
         <% end %>
       </tbody>
     </table>

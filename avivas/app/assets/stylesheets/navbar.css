@@ -57,53 +57,54 @@
                 }
             }
 
-            .notice, .alert {
-                font-family: 'Cabin', sans-serif;
-                padding: 10px;
-                margin: 5px;
-                border-radius: 5px;
-                font-size: 1em;
-                font-weight: bold;
-                text-align: center;
-                animation: fadeOut 0.5s ease-out 4s forwards;
-                position: fixed;
-                top: 15px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 1000;
-            }
-            
-            .notice {
-                background-color: #d9d6d0;
-                color: #000104;
-                border: 1px solid #000104;
-            }
-            
-            .alert {
-                background-color: #b52d2f; 
-                color: #d9d6d0;
-                border: 1px solid #000104;
-            }
-            
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-                to {
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes fadeOut {
-                from {
-                    opacity: 1;
-                }
-                to {
-                    opacity: 0;
-                }
-                
-            }
         }
         
     }
+}
+
+.notice, .alert {
+    font-family: 'Cabin', sans-serif;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    animation: fadeOut 0.5s ease-out 4s forwards;
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.notice {
+    background-color: #d9d6d0;
+    color: #000104;
+    border: 1px solid #000104;
+}
+
+.alert {
+    background-color: #b52d2f; 
+    color: #d9d6d0;
+    border: 1px solid #000104;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+    
 }
