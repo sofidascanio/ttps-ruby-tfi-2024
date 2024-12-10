@@ -16,6 +16,7 @@ es:
   delete: "Eliminar"
   restore: "Restaurar"
   cancel: "Cancelar"
+  block: "Bloquear"
   roles:
     admin: "Administrador"
     manager: "Gerente"

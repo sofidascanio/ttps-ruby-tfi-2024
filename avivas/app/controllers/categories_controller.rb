@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   load_and_authorize_resource
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show ]
   before_action :set_category, only: %i[ show edit update destroy ]
 
   # GET /categories or /categories.json
@@ -10,6 +10,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    @products = @category.products.where(is_deleted: false)
   end
 
   # GET /categories/new

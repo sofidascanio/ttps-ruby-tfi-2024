@@ -6,7 +6,7 @@
       </h2>
       <div class="error-list">
         <% user.errors.each do |error| %>
-          <span class="error-item"><%= error.full_message %></span>
+          <div class="error-item"><%= error.full_message %></div>
         <% end %>
       </div>
     </div>

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
     load_and_authorize_resource
     before_action :authenticate_user! 
     before_action :set_user, only: %i[ show edit update destroy ]
+    before_action :set_roles, only: %i[ new edit ]
 
     def index
         @users = User.order(created_at: :desc).page(params[:page])
@@ -12,10 +13,6 @@ class UsersController < ApplicationController
 
     def new
         @user = User.new
-        @roles = User.roles.keys.map { |role| [t("roles.#{role}"), role] }
-        unless can?(:assign, :admin_role)
-            @roles.reject! { |_, role| role == "admin" }
-        end
     end
 
     def create
@@ -23,16 +20,13 @@ class UsersController < ApplicationController
         if @user.save
             redirect_to @user, notice: "Usuario creado exitosamente."
         else
-            @roles = User.roles.keys.map { |role| [role.humanize, role] }
+            # no se si llamar solo a la función o asignarlo por las dudas
+            @roles = set_roles
             render :new, status: :unprocessable_entity
         end
     end
 
     def edit
-        @roles = User.roles.keys.map { |role| [t("roles.#{role}"), role] }
-        unless can?(:assign, :admin_role)
-            @roles.reject! { |_, role| role == "admin" }
-        end
     end
 
     def update
@@ -46,7 +40,7 @@ class UsersController < ApplicationController
                 redirect_to @user, notice: "Usuario actualizado exitosamente."
             end
         else
-            @roles = User.roles.keys.map { |role| [role.humanize, role] }
+            @roles = set_roles
             render :edit, status: :unprocessable_entity
         end
     end
@@ -55,6 +49,8 @@ class UsersController < ApplicationController
         previous_state = @user.is_deleted
         if @user.toggle!(:is_deleted)
             if previous_state
+                # solución temporal para "restaurar" al usuario
+                @user.update(password: "123456")
                 redirect_to @user, notice: "Usuario activado exitosamente."
             else
                 @user.update(password: Devise.friendly_token())
@@ -70,6 +66,16 @@ class UsersController < ApplicationController
     end
 
     private
+
+    def set_roles
+        # listado de roles
+        # si no tiene permiso para crear/modificar administradores, saco la opcion "administrador"
+        @roles = User.roles.keys.map { |role| [t("roles.#{role}"), role] }
+        unless can?(:assign, :admin_role)
+            @roles.reject! { |_, role| role == "admin" }
+        end
+        return @roles
+    end
 
     def set_user
         @user = User.find(params[:id])

@@ -5,7 +5,7 @@
   </div>
 
   <div class="products-container">
-    <% category.products.each do |product| %>
+    <% @products.each do |product| %>
       <%= link_to product_path(product), class: "product-card" do %>
         <div class="product-image">
           <% if product.images.any? %>

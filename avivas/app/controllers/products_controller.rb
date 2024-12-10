@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :set_categories, only: %i[ new edit ]
 
   # GET /products or /products.json
   def index
@@ -16,12 +17,10 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
-    @categories = Category.all
   end
 
   # GET /products/1/edit
   def edit
-    @categories = Category.all
   end
 
   # POST /products or /products.json
@@ -33,6 +32,7 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: "Se creo el producto." }
         format.json { render :show, status: :created, location: @product }
       else
+        @categories = set_categories
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
@@ -75,6 +75,7 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: "Se actualizo el producto." }
         format.json { render :show, status: :ok, location: @product }
       else
+        @categories = set_categories
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
@@ -87,19 +88,24 @@ class ProductsController < ApplicationController
     @product.update(is_deleted: true, stock: 0, deleted_at: Time.now)
 
     respond_to do |format|
-      format.html { redirect_to products_path, status: :see_other, notice: "Se elimino el producto." }
+      format.html { redirect_to @product, status: :see_other, notice: "Se elimino el producto." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params.expect(product: [ :name, :description, :price, :stock, :color, images: [], category_ids: [] ])
-    end
+  def set_categories
+    @categories = Category.all
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def product_params
+    params.expect(product: [ :name, :description, :price, :stock, :color, images: [], category_ids: [] ])
+  end
 end

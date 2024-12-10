@@ -2,6 +2,7 @@ class SalesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :set_sale, only: %i[ show edit update destroy ]
+  before_action :set_products, only: %i[ new edit ]
 
   # GET /sales or /sales.json
   def index
@@ -16,12 +17,10 @@ class SalesController < ApplicationController
   def new
     @sale = Sale.new
     @sale.product_sales.build 
-    @products = Product.all
   end
 
   # GET /sales/1/edit
   def edit
-    @products = Product.all
   end
 
   # POST /sales or /sales.json
@@ -35,8 +34,6 @@ class SalesController < ApplicationController
           product_sale.price = product_sale.product.price
         end
       end
-
-      @sale.sale_price = @sale.product_sales.sum { |ps| ps.quantity * ps.price }
   
       respond_to do |format|
         if @sale.valid? && check_stock(@sale)
@@ -49,12 +46,12 @@ class SalesController < ApplicationController
             format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
-            @products = Product.all
+            @products = set_products
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @sale.errors, status: :unprocessable_entity }
           end
         else
-          @products = Product.all
+          @products = set_products
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @sale.errors, status: :unprocessable_entity }
         end
@@ -65,10 +62,7 @@ class SalesController < ApplicationController
 
   # PATCH/PUT /sales/1 or /sales/1.json
   def update
-    Sale.transaction do
-      # calculo precio de vuelta, por si cambio
-      @sale.sale_price = @sale.product_sales.sum { |ps| ps.quantity * ps.price }
-  
+    Sale.transaction do  
       respond_to do |format|
         if @sale.valid?
           if @sale.update(sale_params)
@@ -87,7 +81,7 @@ class SalesController < ApplicationController
                     # si la cantidad es mayor a la anterior y no hay suficiente stock
                     if product.stock < stock_difference.abs
                       @sale.errors.add(:base, "El producto '#{product.name}' no tiene suficiente stock disponible. Stock actual: #{product.stock}, solicitado: #{stock_difference.abs}.")
-                      @products = Product.all
+                      @products = set_products
                       format.html { render :edit, status: :unprocessable_entity }
                       format.json { render json: @sale.errors, status: :unprocessable_entity }
                     else
@@ -103,12 +97,12 @@ class SalesController < ApplicationController
             format.html { redirect_to @sale, notice: "Venta actualizada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
-            @products = Product.all
+            @products = set_products
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @sale.errors, status: :unprocessable_entity }
           end
         else
-          @products = Product.all
+          @products = set_products
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @sale.errors, status: :unprocessable_entity }
         end
@@ -128,12 +122,16 @@ class SalesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to sales_path, status: :see_other, notice: "Se cancelo la venta." }
+      format.html { redirect_to @sale, status: :see_other, notice: "Se cancelo la venta." }
       format.json { head :no_content }
     end
   end
 
   private
+
+  def set_products
+    @products = Product.all
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_sale
@@ -155,4 +153,5 @@ class SalesController < ApplicationController
     end
     return true
   end
+
 end
