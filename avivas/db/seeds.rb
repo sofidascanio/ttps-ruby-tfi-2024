@@ -41,15 +41,14 @@ User.create!(
     User.create!(
         username: Faker::Internet.unique.username(specifier: 5..15),
         email: Faker::Internet.unique.email,
-        telephone: rand(10**6..10**14).to_s, 
+        telephone: rand(10**6..10**14).to_s,
         password: Faker::Internet.password(min_length: 6),
         role: rand(0..2),
         entered_at: Faker::Date.backward(days: 365 * 5)
     )
-
 end
 
-sizes = ["Pequeño", "Mediano", "Grande", "Extra Grande", "32", "34", "36", "38", "40", nil]
+sizes = [ "Pequeño", "Mediano", "Grande", "Extra Grande", "32", "34", "36", "38", "40", nil ]
 
 100.times do
     Product.create!(
@@ -78,7 +77,7 @@ end
             sale: sale,
             product: product,
             price: product.price,
-            quantity: rand(1..15) 
+            quantity: rand(1..15)
         )
         total_price += product_sale.price * product_sale.quantity
     end
@@ -91,7 +90,7 @@ end
     while Category.exists?(name: category_name)
         category_name = Faker::Commerce.department(max: 1, fixed_amount: true)
     end
-      
+
     category = Category.create!(name: category_name)
 
     products = Product.order('RANDOM()').limit(20)

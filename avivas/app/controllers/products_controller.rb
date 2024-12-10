@@ -1,12 +1,12 @@
 class ProductsController < ApplicationController
   load_and_authorize_resource
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [ :index, :show ]
   before_action :set_product, only: %i[ show edit update destroy ]
   before_action :set_categories, only: %i[ new edit ]
 
   # GET /products or /products.json
   def index
-    @q = Product.ransack(params[:q])  
+    @q = Product.ransack(params[:q])
     @products = @q.result(distinct: true).where(is_deleted: false).order(created_at: :desc).page(params[:page]).per(12)
   end
 
@@ -87,7 +87,6 @@ class ProductsController < ApplicationController
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
-    
   end
 
   # DELETE /products/1 or /products/1.json

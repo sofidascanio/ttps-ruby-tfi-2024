@@ -26,6 +26,6 @@ module Avivas
     config.i18n.default_locale = :es
     config.i18n.available_locales = :es
     # to enable pluralization and ordinals
-    config.rails_i18n.enabled_modules = [:pluralization, :ordinals]
+    config.rails_i18n.enabled_modules = [ :pluralization, :ordinals ]
   end
 end

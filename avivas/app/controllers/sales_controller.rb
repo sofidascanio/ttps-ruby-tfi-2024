@@ -16,7 +16,7 @@ class SalesController < ApplicationController
   # GET /sales/new
   def new
     @sale = Sale.new
-    @sale.product_sales.build 
+    @sale.product_sales.build
   end
 
   # GET /sales/1/edit
@@ -28,7 +28,7 @@ class SalesController < ApplicationController
     Sale.transaction do
       @sale = Sale.new(sale_params)
       @sale.user = current_user
-  
+
       @sale.product_sales.each do |product_sale|
         if product_sale.product && !product_sale.marked_for_destruction?
           product_sale.price = product_sale.product.price
@@ -36,7 +36,7 @@ class SalesController < ApplicationController
       end
 
       calculate_sale_price(@sale)
-  
+
       respond_to do |format|
         if @sale.valid? && check_stock(@sale)
           if @sale.save
@@ -44,7 +44,7 @@ class SalesController < ApplicationController
               product = product_sale.product
               product.update!(stock: product.stock - product_sale.quantity)
             end
-  
+
             format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
@@ -60,17 +60,17 @@ class SalesController < ApplicationController
       end
     end
   end
-  
+
 
   # PATCH/PUT /sales/1 or /sales/1.json
   def update
-    Sale.transaction do  
+    Sale.transaction do
       respond_to do |format|
         if @sale.valid?
           if @sale.update(sale_params)
             @sale.product_sales.each do |product_sale|
                 product = product_sale.product
-    
+
                 if product_sale.saved_change_to_quantity
                   stock_difference = (product_sale.saved_change_to_quantity&.first || product_sale.quantity) - product_sale.quantity
 
@@ -93,9 +93,9 @@ class SalesController < ApplicationController
                     end
                   end
                 end
-                # el stock de los productos borrados se devuelve en la bd
+              # el stock de los productos borrados se devuelve en la bd
             end
-  
+
             format.html { redirect_to @sale, notice: "Venta actualizada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
@@ -142,12 +142,12 @@ class SalesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_sale
-    @sale = Sale.find(params[:id]) 
+    @sale = Sale.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def sale_params
-    params.require(:sale).permit(:sale_price, :client, product_sales_attributes: [:id, :product_id, :quantity, :price, :_destroy])
+    params.require(:sale).permit(:sale_price, :client, product_sales_attributes: [ :id, :product_id, :quantity, :price, :_destroy ])
   end
 
   def check_stock(sale)
@@ -158,7 +158,6 @@ class SalesController < ApplicationController
         return false
       end
     end
-    return true
+    true
   end
-
 end

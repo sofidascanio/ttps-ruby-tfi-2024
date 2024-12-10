@@ -62,16 +62,18 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'rails-i18n', '~> 8.0.0' 
+gem "rails-i18n", "~> 8.0.0"
 
-gem 'color'
+gem "color"
 
-gem 'devise'
+gem "devise"
 
-gem 'faker'
+gem "faker"
 
-gem 'ransack'
+gem "ransack"
 
-gem 'kaminari'
+gem "kaminari"
 
-gem 'cancancan'
+gem "cancancan"
+
+gem "rubocop"

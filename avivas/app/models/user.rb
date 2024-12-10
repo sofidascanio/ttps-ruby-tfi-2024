@@ -10,6 +10,5 @@ class User < ApplicationRecord
   validates :telephone, presence: true, format: { with: /\A\d{7,15}\z/, message: "debe ser un numero entre 7 y 15 digitos" }
 
   # 0: admin, 1: manager, 2: employee
-  enum :role, [:admin, :manager, :employee], default: :employee
-
+  enum :role, [ :admin, :manager, :employee ], default: :employee
 end
