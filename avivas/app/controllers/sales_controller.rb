@@ -34,6 +34,8 @@ class SalesController < ApplicationController
           product_sale.price = product_sale.product.price
         end
       end
+
+      calculate_sale_price(@sale)
   
       respond_to do |format|
         if @sale.valid? && check_stock(@sale)
@@ -73,7 +75,7 @@ class SalesController < ApplicationController
                   stock_difference = (product_sale.saved_change_to_quantity&.first || product_sale.quantity) - product_sale.quantity
 
                   # si stock_difference es positivo, la cantidad es menor a la anterior
-                  if stock_difference > 0 
+                  if stock_difference > 0
                     product.stock += stock_difference
                     product.save!
                     # si stock_difference es negativo, la cantidad es mayor a la anterior
@@ -129,7 +131,12 @@ class SalesController < ApplicationController
 
   private
 
+  def calculate_sale_price(sale)
+    sale.sale_price = sale.product_sales.sum { |p| p.quantity * p.price }
+  end
+
   def set_products
+    # no puedo filtrar por borrados, porque pueden estar borrados los productos de la misma venta
     @products = Product.all
   end
 

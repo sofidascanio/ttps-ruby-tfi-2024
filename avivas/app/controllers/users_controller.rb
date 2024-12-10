@@ -33,7 +33,7 @@ class UsersController < ApplicationController
         previous_role = @user.role
         if @user.update(user_params)
             if previous_role != @user.role && @user == current_user
-                # usuario "admin" se cambio de rol mientras estaba logueado
+                # si el usuario se cambio su propio rol, cierra la sesión
                 sign_out @user
                 redirect_to root_path, notice: 'Se modifico su rol en el sistema. Ingrese de nuevo.'
             else
@@ -47,21 +47,18 @@ class UsersController < ApplicationController
 
     def destroy
         previous_state = @user.is_deleted
-        if @user.toggle!(:is_deleted)
-            if previous_state
-                # solución temporal para "restaurar" al usuario
-                @user.update(password: "123456")
-                redirect_to @user, notice: "Usuario activado exitosamente."
-            else
-                @user.update(password: Devise.friendly_token())
-                redirect_to @user, notice: "Usuario desactivado exitosamente."
-            end
+        if @user.update(is_deleted: !previous_state)
+          if previous_state
+            # solucion temporal para restaurar al usuario
+            @user.update(password: "123456")
+            redirect_to @user, notice: "Se restauro al usuario."
+          else
+            @user.update(password: Devise.friendly_token())
+            redirect_to @user, notice: "Se bloqueo al usuario."
+          end
         else
-            if previous_state 
-                redirect_to @user, alert: "Error al activar el usuario."
-            else
-                redirect_to @user, alert: "Error al desactivar el usuario."
-            end
+            message = previous_state ? "No se pudo restaurar al usuario." : "No se pudo desactivar al usuario."
+            redirect_to @user, alert: message
         end
     end
 

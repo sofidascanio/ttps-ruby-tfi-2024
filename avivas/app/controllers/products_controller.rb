@@ -92,12 +92,19 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.update(is_deleted: true, stock: 0, deleted_at: Time.now)
-
-    respond_to do |format|
-      format.html { redirect_to @product, status: :see_other, notice: "Se elimino el producto." }
-      format.json { head :no_content }
-    end
+      previous_state = @product.is_deleted
+      if @product.update(is_deleted: !previous_state)
+        if previous_state
+          @product.update(is_deleted: false, deleted_at: nil)
+          redirect_to @product, notice: "Se restauro el producto."
+        else
+          @product.update(is_deleted: true, stock: 0, deleted_at: Time.now)
+          redirect_to @product, notice: "Se elimino el producto."
+        end
+      else
+        message = previous_state ? "No se pudo restaurar el producto." : "No se pudo eliminar el producto."
+        redirect_to @product, alert: message
+      end
   end
 
   private

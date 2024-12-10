@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
-    @products = @category.products.where(is_deleted: false)
+    @products = @category.products.where(is_deleted: false).page(params[:page]).per(12)
   end
 
   # GET /categories/new

@@ -12,11 +12,22 @@ class Product < ApplicationRecord
     has_many :product_sales
     has_many :sales, through: :product_sales
 
+    before_save :cancel_stock
+
     def color_object
         Color::RGB.from_hex(self.color)
     end
 
     def self.ransackable_attributes(auth_object = nil)
         ["name", "description"]  
+    end
+
+    private
+
+    def cancel_stock
+        # en el caso de que se quiera 'devolver' stock
+        if self.is_deleted
+            self.stock = 0
+        end
     end
 end
