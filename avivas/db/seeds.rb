@@ -20,6 +20,15 @@ User.create!(
 )
 
 User.create!(
+    username: "jorgegomez",
+    email: "jorge@gmail.com",
+    password: "123456",
+    telephone: "1234567",
+    role: 0,
+    entered_at: Date.strptime('14/07/2024', '%d/%m/%Y')
+)
+
+User.create!(
     username: "juanperez",
     email: "juan@gmail.com",
     password: "123456",
@@ -29,12 +38,30 @@ User.create!(
 )
 
 User.create!(
+    username: "luciaro",
+    email: "lucia@gmail.com",
+    password: "123456",
+    telephone: "1234567",
+    role: 1,
+    entered_at: Date.strptime('19/03/2023', '%d/%m/%Y')
+)
+
+User.create!(
     username: "pedrolopez",
     email: "pedro@gmail.com",
     password: "123456",
     telephone: "1234567",
     role: 2,
     entered_at: Date.strptime('04/03/2023', '%d/%m/%Y')
+)
+
+User.create!(
+    username: "martinap",
+    email: "martina@gmail.com",
+    password: "123456",
+    telephone: "1234567",
+    role: 2,
+    entered_at: Date.strptime('10/10/2022', '%d/%m/%Y')
 )
 
 15.times do
