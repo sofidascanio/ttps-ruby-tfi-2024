@@ -2,7 +2,7 @@ class UsersController < ApplicationController
     load_and_authorize_resource
     before_action :authenticate_user!
     before_action :set_user, only: %i[ show edit update destroy ]
-    before_action :set_roles, only: %i[ new edit ]
+    before_action :set_roles, only: %i[ new edit create update ]
 
     def index
         @users = User.order(created_at: :desc).page(params[:page])
@@ -20,8 +20,6 @@ class UsersController < ApplicationController
         if @user.save
             redirect_to @user, notice: "Usuario creado exitosamente."
         else
-            # no se si llamar solo a la función o asignarlo por las dudas
-            @roles = set_roles
             render :new, status: :unprocessable_entity
         end
     end
@@ -40,7 +38,6 @@ class UsersController < ApplicationController
                 redirect_to @user, notice: "Usuario actualizado exitosamente."
             end
         else
-            @roles = set_roles
             render :edit, status: :unprocessable_entity
         end
     end

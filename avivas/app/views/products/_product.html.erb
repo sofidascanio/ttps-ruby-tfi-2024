@@ -19,10 +19,10 @@
         <span>Color:</span>
         <div class="color-square" style="background-color: <%= product.color %>;"></div>
       </div>
-      <p>Stock: <span><%= product.stock %></span></p>
       <% if product.size.present? %>
         <p>Talle: <span><%= product.size %></span></p>
       <% end %>
+      <p>Stock: <span><%= product.stock %></span></p>
       <% if user_signed_in?  %>
         <% if product.is_deleted  %>
           <p>Fecha de Baja: <span><%= product.deleted_at.strftime("%d/%m/%Y, %H:%M") %></span></p>

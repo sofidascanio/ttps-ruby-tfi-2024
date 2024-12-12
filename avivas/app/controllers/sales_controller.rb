@@ -2,7 +2,7 @@ class SalesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :set_sale, only: %i[ show edit update destroy ]
-  before_action :set_products, only: %i[ new edit ]
+  before_action :set_products, only: %i[ new edit create update ]
 
   # GET /sales or /sales.json
   def index
@@ -48,12 +48,10 @@ class SalesController < ApplicationController
             format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
-            @products = set_products
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @sale.errors, status: :unprocessable_entity }
           end
         else
-          @products = set_products
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @sale.errors, status: :unprocessable_entity }
         end
@@ -71,11 +69,17 @@ class SalesController < ApplicationController
             @sale.product_sales.each do |product_sale|
                 product = product_sale.product
 
+                Rails.logger.info "------------------------------"
+
                 if product_sale.saved_change_to_quantity
                   stock_difference = (product_sale.saved_change_to_quantity&.first || product_sale.quantity) - product_sale.quantity
+                  Rails.logger.info "Saved change: #{product_sale.saved_change_to_quantity&.first}"
+                  Rails.logger.info "Product_sale.quantity #{product_sale.quantity}"
 
                   # si stock_difference es positivo, la cantidad es menor a la anterior
                   if stock_difference > 0
+                    Rails.logger.info "Devolvio stock que no corresponde"
+
                     product.stock += stock_difference
                     product.save!
                     # si stock_difference es negativo, la cantidad es mayor a la anterior
@@ -83,6 +87,9 @@ class SalesController < ApplicationController
                     # si la cantidad es mayor a la anterior y no hay suficiente stock
                     if product.stock < stock_difference.abs
                       @sale.errors.add(:base, "El producto '#{product.name}' no tiene suficiente stock disponible. Stock actual: #{product.stock}, solicitado: #{stock_difference.abs}.")
+                      product_sale.quantity = product_sale.saved_change_to_quantity&.first
+                      product_sale.saved_change_to_quantity&.first
+                      Rails.logger.info "Product_sale.quantity #{product_sale.quantity}"
                       @products = set_products
                       format.html { render :edit, status: :unprocessable_entity }
                       format.json { render json: @sale.errors, status: :unprocessable_entity }
@@ -93,18 +100,17 @@ class SalesController < ApplicationController
                     end
                   end
                 end
+                Rails.logger.info "------------------------------"
               # el stock de los productos borrados se devuelve en la bd
             end
 
             format.html { redirect_to @sale, notice: "Venta actualizada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
-            @products = set_products
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @sale.errors, status: :unprocessable_entity }
           end
         else
-          @products = set_products
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @sale.errors, status: :unprocessable_entity }
         end

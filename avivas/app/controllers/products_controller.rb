@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :set_product, only: %i[ show edit update destroy ]
-  before_action :set_categories, only: %i[ new edit ]
+  before_action :set_categories, only: %i[ new edit create update ]
 
   # GET /products or /products.json
   def index
@@ -39,7 +39,6 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: "Se creo el producto." }
         format.json { render :show, status: :created, location: @product }
       else
-        @categories = set_categories
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
@@ -82,7 +81,6 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: "Se actualizo el producto." }
         format.json { render :show, status: :ok, location: @product }
       else
-        @categories = set_categories
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
