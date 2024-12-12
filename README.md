@@ -74,9 +74,9 @@ De cada producto se guarda:
 + ```images```: Imagenes.
 + ```size```: Talle (opcional).
 + ```color```: Color.
-+ ```created_at```: Fecha de Ingreso al Inventario.
-+ ```updated_at```: Fecha de Ultima Modificación.
-+ ```deleted_at```: Fecha de Baja (solo si fue eliminado).
++ ```created_at```: Fecha de ingreso al inventario.
++ ```updated_at```: Fecha de ultima modificación.
++ ```deleted_at```: Fecha de baja (solo si fue eliminado).
 + ```categories```: Categorias (Relacion muchos a muchos con ```Category```).
  
 Los productos se borran "logicamente", no se borran de la base de datos, al "eliminar" un producto se le agrega una ```Fecha de Baja``` y su stock pasa a ```0```.
@@ -90,7 +90,7 @@ Cada imagen tiene un registro en la tabla ```active_storage_blobs``` y la relaci
 Se permite a los usuarios del sistema a gestionar ventas.
 
 De cada venta se guarda:
-+ ```created_at```: Fecha y Hora de Realización.
++ ```created_at```: Fecha y hora de realización.
 + ```product_sales```: Productos vendidos, con cantidad y precio de venta (Relación intermedia ```ProductSale``` entre ```Product``` y ```Sale```).
 + ```sale_price```: Precio total de la venta.
 + ```client```: Cliente.
@@ -99,7 +99,7 @@ De cada venta se guarda:
 Al crear una venta, se descuenta el stock del producto.
 + Si se cancela la venta, se devuelve todo el stock al producto.
 + Si se modifica la venta:
-    - Si se cambia la cantidad del producto, resta o agrega stock al(solo resta si el producto tiene stock).
+    - Si se cambia la cantidad del producto, resta o agrega stock (solo resta si el producto tiene stock).
     - Si se elimina el producto, se devuelve todo el stock.
 
 Las ventas no se borran fisicamente de la base de datos, se "cancelan" y quedan guardadas, como "Venta Cancelada".
@@ -108,12 +108,12 @@ Las ventas no se borran fisicamente de la base de datos, se "cancelan" y quedan 
 
 Se permite crear usuarios con diferentes roles desde la interfaz de administración (accesible solo por los usuarios autenticados)
 
-+ ```username```: Nombre de Usuario (único)
++ ```username```: Nombre de usuario (único)
 + ```email```: Correo electronico (único)
 + ```telephone```: Telefono 
 + ```password```: Contraseña
 + ```role```: Rol
-+ ```entered_at```: Fecha de Ingreso a la Cadena
++ ```entered_at```: Fecha de ingreso a la Cadena
 
 Hay tres roles dentro del sistema: "Administrador", "Gerente" o "Empleado"
 + Los administradores tienen acceso a todas las funcionalidades del sistema.
