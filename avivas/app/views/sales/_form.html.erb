@@ -48,53 +48,57 @@
 
 <%= javascript_tag do %>
   document.addEventListener('turbo:load', function() {
-  const productsContainer = document.getElementById('products-container');
-  const addButton = document.getElementById('add-product-button');
-  let productIndex = document.querySelectorAll('.product-item').length;
+    const productsContainer = document.getElementById('products-container');
+    const addButton = document.getElementById('add-product-button');
 
-  addButton.addEventListener('click', function() {
-    const newProduct = document.createElement('div');
-    newProduct.className = 'product-item';
-    newProduct.innerHTML = `
-      <input type="hidden" name="sale[product_sales_attributes][${productIndex}][id]" value="" />
-      
-      <label for="sale_product_sales_attributes_${productIndex}_product_id">Producto</label>
-      <select name="sale[product_sales_attributes][${productIndex}][product_id]" id="sale_product_sales_attributes_${productIndex}_product_id" class="product-select">
-        <option value="">Seleccione un producto</option>
-        ${Array.from(document.querySelector('.product-select').options)
-          .map(opt => `<option value="${opt.value}">${opt.text}</option>`)
-          .join('')}
-      </select>
-      
-      <label for="sale_product_sales_attributes_${productIndex}_quantity">Cantidad</label>
-      <input type="number" name="sale[product_sales_attributes][${productIndex}][quantity]" id="sale_product_sales_attributes_${productIndex}_quantity" min="0" value="1" />
-      
-      <input type="hidden" name="sale[product_sales_attributes][${productIndex}][price]" value="" />
+    if (!addButton.dataset.eventAttached) {
+      let productIndex = document.querySelectorAll('.product-item').length;
 
-      <input type="checkbox" name="sale[product_sales_attributes][${productIndex}][_destroy]" id="sale_product_sales_attributes_${productIndex}__destroy" value="1" />
-      <label for="sale_product_sales_attributes_${productIndex}__destroy">Eliminar este producto</label>
-    `;
+      addButton.addEventListener('click', function() {
+        const newProduct = document.createElement('div');
+        newProduct.className = 'product-item';
+        newProduct.innerHTML = `
+          <input type="hidden" name="sale[product_sales_attributes][${productIndex}][id]" value="" />
+          
+          <label for="sale_product_sales_attributes_${productIndex}_product_id">Producto</label>
+          <select name="sale[product_sales_attributes][${productIndex}][product_id]" id="sale_product_sales_attributes_${productIndex}_product_id" class="product-select">
+            <option value="">Seleccione un producto</option>
+            ${Array.from(document.querySelector('.product-select').options)
+              .map(opt => `<option value="${opt.value}">${opt.text}</option>`)
+              .join('')}
+          </select>
+          
+          <label for="sale_product_sales_attributes_${productIndex}_quantity">Cantidad</label>
+          <input type="number" name="sale[product_sales_attributes][${productIndex}][quantity]" id="sale_product_sales_attributes_${productIndex}_quantity" min="1" value="1" />
+          
+          <input type="hidden" name="sale[product_sales_attributes][${productIndex}][price]" value="" />
 
-    productsContainer.appendChild(newProduct);
-    productIndex++;
+          <input type="checkbox" name="sale[product_sales_attributes][${productIndex}][_destroy]" id="sale_product_sales_attributes_${productIndex}__destroy" value="1" />
+          <label for="sale_product_sales_attributes_${productIndex}__destroy">Eliminar este producto</label>
+        `;
 
-    const newSelect = newProduct.querySelector('.product-select');
-    setupProductSelect(newSelect);
+        productsContainer.appendChild(newProduct);
+        productIndex++;
+
+        const newSelect = newProduct.querySelector('.product-select');
+        setupProductSelect(newSelect);
+      });
+
+      addButton.dataset.eventAttached = "true";
+    }
+
+    function setupProductSelect(select) {
+      select.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const priceField = this.closest('.product-item').querySelector('input[name$="[price]"]');
+        if (!selectedOption.value) {
+          priceField.value = 0;
+        }
+      });
+    }
+
+    document.querySelectorAll('.product-select').forEach(setupProductSelect);
   });
-
-  function setupProductSelect(select) {
-    select.addEventListener('change', function() {
-      const selectedOption = this.options[this.selectedIndex];
-      const priceField = this.closest('.product-item').querySelector('input[name$="[price]"]');
-      if (selectedOption.value) {
-        priceField.value = (parseFloat(selectedOption.value) * 10).toFixed(2); // Dummy price calculation
-      } else {
-        priceField.value = '';
-      }
-    });
-  }
-
-  document.querySelectorAll('.product-select').forEach(setupProductSelect);
-});
 <% end %>
+
 

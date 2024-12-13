@@ -19,6 +19,15 @@
         <span>Color:</span>
         <div class="color-square" style="background-color: <%= product.color %>;"></div>
       </div>
+      <% if product.categories.present? %>
+        <p> Categorias: 
+          <% product.categories.each_with_index do |category, index| %>
+            <span>
+              <%= category.name %><%= index == product.categories.size - 1 ? '.' : ', ' %>
+            </span>
+          <% end %>
+        </p>
+      <% end %>
       <% if product.size.present? %>
         <p>Talle: <span><%= product.size %></span></p>
       <% end %>
@@ -31,9 +40,6 @@
 
     </div>
   </div>
-  <% product.categories.each do |category| %>
- <h3><%= category.name %></h3>
-  <% end %>
 </div>
 
 <%= javascript_tag do %>

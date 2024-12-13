@@ -73,9 +73,6 @@
     &:focus {
         outline: 0;
     }
-    &:hover {
-        border-color: #b52d2f;
-    }
     option {
         padding: 0.5rem;
     }

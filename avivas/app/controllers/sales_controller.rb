@@ -29,22 +29,15 @@ class SalesController < ApplicationController
       @sale = Sale.new(sale_params)
       @sale.user = current_user
 
-      @sale.product_sales.each do |product_sale|
-        if product_sale.product && !product_sale.marked_for_destruction?
-          product_sale.price = product_sale.product.price
-        end
-      end
-
-      calculate_sale_price(@sale)
-
       respond_to do |format|
         if @sale.valid? && check_stock(@sale)
-          if @sale.save
-            @sale.product_sales.each do |product_sale|
-              product = product_sale.product
-              product.update!(stock: product.stock - product_sale.quantity)
+          @sale.product_sales.each do |product_sale|
+            if product_sale.product && !product_sale.marked_for_destruction?
+              product_sale.price = product_sale.product.price
+              product_sale.product.update!(stock: product_sale.product.stock - product_sale.quantity)
             end
-
+          end
+          if @sale.save
             format.html { redirect_to @sale, notice: "Venta creada exitosamente." }
             format.json { render :show, status: :created, location: @sale }
           else
@@ -66,20 +59,19 @@ class SalesController < ApplicationController
       respond_to do |format|
         if @sale.valid?
           if @sale.update(sale_params)
+            # en el caso de que se haya borrado algun producto, para que se ejecute el callback
+            @sale.product_sales.reload
+            @sale.save
             @sale.product_sales.each do |product_sale|
                 product = product_sale.product
 
-                Rails.logger.info "------------------------------"
+                # no funciona bien el update
 
                 if product_sale.saved_change_to_quantity
                   stock_difference = (product_sale.saved_change_to_quantity&.first || product_sale.quantity) - product_sale.quantity
-                  Rails.logger.info "Saved change: #{product_sale.saved_change_to_quantity&.first}"
-                  Rails.logger.info "Product_sale.quantity #{product_sale.quantity}"
 
                   # si stock_difference es positivo, la cantidad es menor a la anterior
                   if stock_difference > 0
-                    Rails.logger.info "Devolvio stock que no corresponde"
-
                     product.stock += stock_difference
                     product.save!
                     # si stock_difference es negativo, la cantidad es mayor a la anterior
@@ -88,9 +80,6 @@ class SalesController < ApplicationController
                     if product.stock < stock_difference.abs
                       @sale.errors.add(:base, "El producto '#{product.name}' no tiene suficiente stock disponible. Stock actual: #{product.stock}, solicitado: #{stock_difference.abs}.")
                       product_sale.quantity = product_sale.saved_change_to_quantity&.first
-                      product_sale.saved_change_to_quantity&.first
-                      Rails.logger.info "Product_sale.quantity #{product_sale.quantity}"
-                      @products = set_products
                       format.html { render :edit, status: :unprocessable_entity }
                       format.json { render json: @sale.errors, status: :unprocessable_entity }
                     else
@@ -100,7 +89,6 @@ class SalesController < ApplicationController
                     end
                   end
                 end
-                Rails.logger.info "------------------------------"
               # el stock de los productos borrados se devuelve en la bd
             end
 
@@ -123,7 +111,7 @@ class SalesController < ApplicationController
     @sale.update(is_deleted: true)
 
     @sale.product_sales.each do |product_sale|
-      # devuelvo stock al producto
+      # Devuelvo stock al producto
       product = product_sale.product
       product.stock += product_sale.quantity
       product.update(stock: product.stock)
@@ -136,10 +124,6 @@ class SalesController < ApplicationController
   end
 
   private
-
-  def calculate_sale_price(sale)
-    sale.sale_price = sale.product_sales.sum { |p| p.quantity * p.price }
-  end
 
   def set_products
     # no puedo filtrar por borrados, porque pueden estar borrados los productos de la misma venta

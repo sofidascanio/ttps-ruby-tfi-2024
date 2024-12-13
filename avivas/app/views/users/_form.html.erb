@@ -23,9 +23,9 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :telephone, class:"form-label" %>
-    <%= form.text_field :telephone, class:"form-input" %>
-  </div>
+  <%= form.label :telephone, class: "form-label" %>
+  <%= form.text_field :telephone, class: "form-input", minlength: 7, maxlength: 16 %>
+</div>
 
   <div class="form-group">
     <%= form.label :role, class:"form-label" %>

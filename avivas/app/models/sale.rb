@@ -6,8 +6,7 @@ class Sale < ApplicationRecord
 
     belongs_to :user
 
-    # lo uso solo en el update, si uso before_save el seeds no calcula el precio
-    before_update :total_price
+    before_save :total_price
 
     validates :client, presence: true, length: { maximum: 200, message: "puede tener 200 caracteres maximo" }
 

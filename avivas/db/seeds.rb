@@ -8,6 +8,17 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+# Para borrar las imagenes que habian quedado de productos.
+storage_path = Rails.root.join('storage', 'product_images')
+
+if Dir.exist?(storage_path)
+  FileUtils.rm_rf(storage_path)
+
+  puts "Se borraron las imagenes de productos"
+else
+  puts "El directorio storage/product_images no existe o esta vacío."
+end
+
 Faker::Config.locale = :es
 
 User.create!(
@@ -78,7 +89,7 @@ end
 sizes = [ "Pequeño", "Mediano", "Grande", "Extra Grande", "32", "34", "36", "38", "40", nil ]
 
 100.times do
-    Product.create!(
+    product = Product.create!(
         name: "#{Faker::Commerce.material} #{Faker::Commerce.product_name}",
         description: Faker::Lorem.sentence(word_count: 15),
         price: Faker::Commerce.price(range: 1.0..1000.0, as_string: false),
@@ -86,6 +97,15 @@ sizes = [ "Pequeño", "Mediano", "Grande", "Extra Grande", "32", "34", "36", "38
         color: Faker::Color.color_name,
         size: sizes.sample
     )
+
+    # Cargo imagenes para los productos
+    image_files = Dir[Rails.root.join('app', 'assets', 'images', 'products', '*.{jpg,png,gif,jpeg, webp}')]
+
+    selected_images = image_files.sample(3)
+
+    selected_images.each do |image_path|
+        product.images.attach(io: File.open(image_path), filename: File.basename(image_path))
+    end
 end
 
 50.times do
@@ -98,7 +118,6 @@ end
 
     products = Product.order('RANDOM()').limit(rand(1..5))
 
-    total_price = 0
     products.each do |product|
         product_sale = ProductSale.create!(
             sale: sale,
@@ -106,10 +125,11 @@ end
             price: product.price,
             quantity: rand(1..15)
         )
-        total_price += product_sale.price * product_sale.quantity
     end
 
-    sale.update!(sale_price: total_price)
+    # para que vuelva a cargar la relacion y el sale.save para que ejecute el callback del calculo
+    sale.product_sales.reload
+    sale.save
 end
 
 15.times do

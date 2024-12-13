@@ -3,7 +3,7 @@
 <div class="title-container">
   <h1> Editar Usuario </h1>
     <%= link_to t('show') + ' ' + t('user'), @user, class: "add-button"   %> 
-    <%= link_to t('back_to') + ' ' + t('user'), user_path(@user), class: "add-button"  %>
+    <%= link_to t('back_to') + ' ' + t('users'), users_path, class: "add-button"  %>
 </div>
 
 <%= render "form", user: @user %>

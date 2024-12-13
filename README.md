@@ -82,8 +82,10 @@ De cada producto se guarda:
 Los productos se borran "logicamente", no se borran de la base de datos, al "eliminar" un producto se le agrega una ```Fecha de Baja``` y su stock pasa a ```0```.
 Se pueden "restaurar" los productos para poder modificarlos y agregarle stock.
 
-Las imagenes de los productos se manejan con ```Active Storage```. Se guardan en ```storage```.
+Las imagenes de los productos se manejan con ```Active Storage```. Se guardan en ```storage/product_images```.
 Cada imagen tiene un registro en la tabla ```active_storage_blobs``` y la relación entre imagen-producto se guarda en ```active_storage_attachments```.
+
+Cuando se resetea la base de datos y se ejecuta el seeds, se borran las imagenes guardadas en ```storage/product_images``` (si hay), y al crear los productos nuevamente, se relacionan de forma aleatoria con las imagenes guardadas en ```app/assets/images/products``` (tres imagenes por producto, para la presentación).
 
 ### Ventas
 

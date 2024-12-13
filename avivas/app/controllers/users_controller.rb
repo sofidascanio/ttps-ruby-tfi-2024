@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         previous_role = @user.role
         if @user.update(user_params)
             if previous_role != @user.role && @user == current_user
-                # si el usuario se cambio su propio rol, cierra la sesión
+                # Si el usuario se cambio su propio rol, cierra la sesión
                 sign_out @user
                 redirect_to root_path, notice: "Se modifico su rol en el sistema. Ingrese de nuevo."
             else
@@ -62,7 +62,6 @@ class UsersController < ApplicationController
     private
 
     def set_roles
-        # listado de roles
         # si no tiene permiso para crear/modificar administradores, saco la opcion "administrador"
         @roles = User.roles.keys.map { |role| [ t("roles.#{role}"), role ] }
         unless can?(:assign, :admin_role)
