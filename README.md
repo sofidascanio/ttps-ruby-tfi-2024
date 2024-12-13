@@ -2,7 +2,7 @@
 
 <h1 align="center"> AVIVAS </h1>
 
-Aplicación de gestión de inventario de indumentaria para la cadena de ropa deportiva 'AVIVAS'. La aplicación permite al personal de la cadena administrar el stock de productos, realizar ventas y tener una página pública que permita mostrar los productos que la tienda tiene en stock.
+Aplicación de gestión de inventario de indumentaria para la cadena de ropa deportiva 'AVIVAS'. La aplicación permite al personal de la cadena administrar el stock de productos, realizar ventas y tener una página pública para mostrar los productos que la tienda tiene en stock.
 
 
 ## Comandos 
